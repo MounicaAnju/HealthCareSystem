@@ -64,14 +64,16 @@ def addrow():
             gender = data['gender']
             email = data['email']
             phonenumber = data['phoneno']
+            password=data['password']
             conn = sqlite3.connect('database.db')
             print ("Opened database successfully")
-            conn.execute('CREATE TABLE IF NOT EXISTS USERS(fname TEXT, lname TEXT, age TEXT, address TEXT, gender TEXT, email TEXT,phonenumber TEXT)')
+            conn.execute('drop table users')
+            conn.execute('CREATE TABLE IF NOT EXISTS USERS(fname TEXT, lname TEXT, age TEXT, address TEXT, gender TEXT, email TEXT,phonenumber TEXT,password TEXT)')
             print ("Table created successfully")
 
             with sqlite3.connect("database.db") as con:
                 cur = con.cursor()
-                cur.execute("INSERT INTO USERS (fname, lname, age, address, gender, email,phonenumber) VALUES(?,?,?,?,?,?,?)",(fname, lname, age, address, gender, email,phonenumber))
+                cur.execute("INSERT INTO USERS (fname, lname, age, address, gender, email,phonenumber,password) VALUES(?,?,?,?,?,?,?,?)",(fname, lname, age, address, gender, email,phonenumber,password))
                 # cur.execute("INSERT INTO USERS (fname, lname) VALUES(?,?)",(fname, lname ))
                 print("hello db")
                 con.commit()
@@ -85,8 +87,53 @@ def addrow():
             
             con.close()
             return jsonify({'message': msg})
-            
         
+@app.route("/uservalidation", methods=['POST'])
+def uservalidation():
+    email = request.json['email']
+    password = request.json['password']
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM users WHERE email=? AND password=?', (email, password))
+    user = cursor.fetchone()
+    if user:
+        # User is found, return JSON response indicating success
+        return jsonify(valid=True)
+    else:
+        # User is not found, return JSON response indicating failure
+        return jsonify(valid=False)
+
+            
+@app.route("/contactusform", methods=['POST'])
+def contactusform():
+    if request.method == 'POST':
+        form = request.json
+        name = form['name']
+        email = form['email']
+        message = form['message']
+        try:
+            conn = sqlite3.connect('database.db')
+            print("Opened database successfully")
+            conn.execute('drop table if exists contactus')
+            conn.execute('CREATE TABLE IF NOT EXISTS CONTACTUS(name TEXT, email TEXT,message TEXT)')
+            with sqlite3.connect("database.db") as con:
+                cur = con.cursor()
+                cur.execute("INSERT INTO CONTACTUS (name, email, message) VALUES (?, ?, ?)", (name, email, message))
+                con.commit()
+                msg = "Record added successfully"
+        except:
+            con.rollback()
+            msg = "Data Insertion Failed"
+
+        finally:
+            con.close()
+            return jsonify({'message': msg})
+
+
+
+
+
+
 
 
 
