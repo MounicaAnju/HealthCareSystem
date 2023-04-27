@@ -121,10 +121,22 @@
             errorMessage.textContent = '';
         }
 
+        // function validateEmail() {
+        //     if (email.validity.valueMissing) {
+        //         showError(email, emailErrorMessage, emailLabel);
+        //     } else if (email.validity.typeMismatch) {
+        //         showError(email, emailErrorMessage, emailLabel);
+        //         emailErrorMessage.textContent = 'Please enter a valid email address';
+        //     } else {
+        //         hideError(email, emailErrorMessage);
+        //     }
+        // }
         function validateEmail() {
+            
+            pattern=/^((([!#$%&'*+\-/=?^_`{|}~\w])|([!#$%&'*+\-/=?^_`{|}~\w][!#$%&'*+\-/=?^_`{|}~\.\w]{0,}[!#$%&'*+\-/=?^_`{|}~\w]))[@]\w+([-.]\w+)*\.\w+([-.]\w+)*)$/;
             if (email.validity.valueMissing) {
                 showError(email, emailErrorMessage, emailLabel);
-            } else if (email.validity.typeMismatch) {
+            } else if (!pattern.test(email.value)) {
                 showError(email, emailErrorMessage, emailLabel);
                 emailErrorMessage.textContent = 'Please enter a valid email address';
             } else {
@@ -132,9 +144,22 @@
             }
         }
 
+        // function validatePassword() {
+        //     if (password.validity.valueMissing) {
+        //         showError(password, passwordErrorMessage, passwordLabel);
+        //     } else {
+        //         hideError(password, passwordErrorMessage);
+        //     }
+        // }
+
         function validatePassword() {
+            patternpassword=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
             if (password.validity.valueMissing) {
                 showError(password, passwordErrorMessage, passwordLabel);
+            }else if(!patternpassword.test(password.value)){
+
+                showError(password, passwordErrorMessage, passwordLabel);
+                passwordErrorMessage.textContent='The password you provided is not valid. Please ensure that your password meets the following requirements a) Must contain at least one lowercase and uppercase letter and atleast one digit and Must be at least 8 characters long.'
             } else {
                 hideError(password, passwordErrorMessage);
             }
