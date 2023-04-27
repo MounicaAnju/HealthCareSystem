@@ -2,9 +2,12 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from flask import jsonify
-
+from datetime import datetime
+import json
 import sqlite3
+
 app = Flask(__name__)
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -19,7 +22,33 @@ def aboutus():
 
 @app.route("/analytics")
 def analytics():
-    return render_template("analytics.html")
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT strftime('%m', datetime) as month FROM appointments")
+    results = cursor.fetchall()
+    
+    month_counts = {}
+    for result in results:
+        month_num = int(result[0])
+        month_name = datetime(2000, month_num, 1).strftime('%b')
+        if month_name in month_counts:
+            month_counts[month_name] += 1
+        else:
+            month_counts[month_name] = 1
+            
+    labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    counts = []
+    for label in labels:
+        if label in month_counts:
+            counts.append(month_counts[label])
+        else:
+            counts.append(0)
+    
+    print('labels:', labels)
+    print('counts:', counts)
+
+    return render_template("analytics.html", labels=json.dumps(labels), counts=json.dumps(counts))
 
 @app.route("/bookappointment")
 def bookappointment():
@@ -166,9 +195,3 @@ def validate():
     # else:
     #     # User is not found, return JSON response indicating failure
     #     return jsonify(valid=False)
-
-            
-        
-
-
-

@@ -38,6 +38,7 @@
             </nav>
         </header>
         <div class="container">
+
             <div class="about-section">
                 <img src="static/images/healthcare-analytics.jpg" alt="About us Medicare Photo">
                 <h2>Medicare Healthcare System Analytics</h2>
@@ -138,12 +139,12 @@
 
                 // Set the data for the chart
                 var data = {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    labels: JSON.parse('{{ labels|safe }}'),
                     datasets: [{
                         label: 'Number of Cases',
-                        data: [20, 30, 40, 50, 60, 70],
-                        backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)'],
-                        borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+                        data: JSON.parse('{{ counts|safe }}'),
+                        backgroundColor: ['rgba(77, 20, 80, 0.7)', 'rgba(2, 169, 38, 0.7)', 'rgba(23, 103, 61, 0.6)', 'rgba(25, 100, 119, 0.6)', 'rgba(160, 36, 142, 0.7)', 'rgba(72, 115, 84, 0.7)', 'rgba(38, 128, 184, 0.7)', 'rgba(3, 71, 68, 0.7)', 'rgba(27, 38, 136, 0.5)', 'rgba(82, 3, 61, 0.5)'],
+                        borderColor: ['rgba(77, 20, 80, 0.7)', 'rgba(2, 169, 38, 0.7)', 'rgba(23, 103, 61, 0.6)', 'rgba(25, 100, 119, 0.6)', 'rgba(160, 36, 142, 0.7)', 'rgba(72, 115, 84, 0.7)', 'rgba(38, 128, 184, 0.7)', 'rgba(3, 71, 68, 0.7)', 'rgba(27, 38, 136, 0.5)', 'rgba(82, 3, 61, 0.5)'],
                         borderWidth: 1
                     }]
                 };
