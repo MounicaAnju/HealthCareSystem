@@ -150,16 +150,29 @@
 
 
         function validateUser() {
-            const formData = JSON.parse(localStorage.getItem('formData'));
-            const storedEmail = formData.email
-            const storedPassword = formData.password
-            if (email.value === storedEmail && password.value === storedPassword) {
-                return true;
-            } else {
-                showError(password, passwordErrorMessage, passwordLabel);
-                passwordErrorMessage.textContent = 'It seems like you didnt Sign Up. Please Sign Up.';
-                return false;
-            }
+            // const formData = JSON.parse(localStorage.getItem('formData'));
+            // const storedEmail = formData.email
+            // const storedPassword = formData.password
+            const email=document.getElementById("email");
+            const password=document.getElementById("password");
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/uservalidation');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.valid) {
+                        // User is valid, submit the form
+                        // document.getElementById('myForm').submit();
+                        return true;
+                    }else {
+                        showError(password, passwordErrorMessage, passwordLabel);
+                        passwordErrorMessage.textContent = 'It seems like you didnt Sign Up. Please Sign Up.';
+                        return false;
+                    }
+                }
+            };
+            xhr.send(JSON.stringify({ email: email.value, password: password.value }));
         }
 
         email.addEventListener('input', validateEmail);
@@ -189,6 +202,7 @@
             if (form.checkValidity() && validateUser()) {
                 // popup
                 //successPopup.style.display = 'block';
+                print("doneeee")
                 window.location.href = 'analytics.html';
             }
         }
