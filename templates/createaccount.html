@@ -349,13 +349,19 @@
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.onload = function () {
                 if (xhr.status === 200) {
-                    console.log(xhr.responseText);
-                    resetForm();
-                    alert("Account Created Successfully");
-                    window.location.href="{{url_for('login')}}"
+                    const response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                    if (response.success) {
+                        resetForm();
+                        alert(response.message);
+                        window.location.href="{{url_for('login')}}"
                 } else {
-                    console.log("Error: " + xhr.status);
+                    resetForm();
+                    alert(response.message);
                 }
+            } else{
+                console.log("Error:"+xhr.status)
+            }
                 };
                 xhr.send(JSON.stringify({ firstName: firstNameValue, lastName: lastNameValue, age: ageValue, address:addressValue, gender:genderValue, email:emailValue, phoneno:phoneNumberValue, password:passwordValue }));
             
@@ -372,7 +378,6 @@
 
         function resetForm() {
             isValid = 0;
-            // Validate the form values
             const formAttributes = ["first-name", "last-name", "age", "address", "gender", "email", "phone-number", "password", "retype-password"];
             for (let i = 0; i < formAttributes.length; i++) {
                 document.getElementById(formAttributes[i]).value = "";

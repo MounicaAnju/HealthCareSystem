@@ -74,11 +74,16 @@ def addrow():
 
             with sqlite3.connect("database.db") as con:
                 cur = con.cursor()
-                cur.execute("INSERT INTO USERS (fname, lname, age, address, gender, email,phonenumber,password) VALUES(?,?,?,?,?,?,?,?)",(fname, lname, age, address, gender, email,phonenumber,password))
-                # cur.execute("INSERT INTO USERS (fname, lname) VALUES(?,?)",(fname, lname ))
-                print("hello db")
-                con.commit()
-                msg = "Record successfully added"
+                cur.execute("SELECT email FROM USERS WHERE email=?", (email,))
+                result = cur.fetchone()
+                if result is not None:
+                    msg = "User with this email already exists"
+                else:
+                    cur.execute("INSERT INTO USERS (fname, lname, age, address, gender, email,phonenumber,password) VALUES(?,?,?,?,?,?,?,?)",(fname, lname, age, address, gender, email,phonenumber,password))
+                    # cur.execute("INSERT INTO USERS (fname, lname) VALUES(?,?)",(fname, lname ))
+                    print("hello db")
+                    con.commit()
+                    msg = "Account Created Successfully"
         except:
             con.rollback()
             print("hello error")
