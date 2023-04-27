@@ -86,7 +86,6 @@
                 <div class="button-container">
                     <button><span>Login &nbsp;&nbsp;<i class="fa fa-chevron-right"></i></span></button>
                 </div>
-                
                 <div class="forgot-password">
                     <a href="forgotpassword.html">Forgot Password?</a>
                 </div>
@@ -163,25 +162,25 @@
         //     }
         // }
         async function validateUser() {
-        const email = document.getElementById('email');
-        const password = document.getElementById('password');
-        const response = await fetch('/validate', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: email.value, password: password.value }),
-        });
-        const data = await response.json();
-        console.log(data)
-        if (data.success) {
-            return true;
-        } else if (data.message === 'Invalid email or password') {
-            showError(password, passwordErrorMessage, passwordLabel);
-            passwordErrorMessage.textContent = 'Please check your email or password.';
-            return false; 
-        } else {
-            showError(password, passwordErrorMessage, passwordLabel);
-            passwordErrorMessage.textContent = 'It seems like you do not have an account. Please sign up.';
-            return false; 
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const response = await fetch('/validate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email.value, password: password.value }),
+            });
+            const data = await response.json();
+            console.log(data)
+            if (data.success) {
+                return true;
+            } else if (data.message === 'Invalid email or password') {
+                showError(password, passwordErrorMessage, passwordLabel);
+                passwordErrorMessage.textContent = 'Please check your email or password.';
+                return false; 
+            } else {
+                showError(password, passwordErrorMessage, passwordLabel);
+                passwordErrorMessage.textContent = 'It seems like you do not have an account. Please sign up.';
+                return false; 
         }
         // } else {
         //     // showError(password, data.message, 'Password');
@@ -238,9 +237,6 @@
                 // }
             }
         }
-
-form.addEventListener('submit', validateForm);
-
 
         form.addEventListener('submit', validateForm);
     </script>

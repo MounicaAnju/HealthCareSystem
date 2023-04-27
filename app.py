@@ -105,11 +105,11 @@ def validate():
 
     if result:
         if result[7] == password:
-            name=result[0]
+            # name=result[0]
             print("hiiiiii user")
             return jsonify({'success': True})
         else:
-            return jsonify({'success': False, 'message': 'Invalid email or password','name':name})
+            return jsonify({'success': False, 'message': 'Invalid email or password'})
     else:
         # User does not exist
         return jsonify({'success': False})
