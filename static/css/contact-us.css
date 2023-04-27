@@ -1,0 +1,84 @@
+/* Container styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Contact info styles */
+.contact-info {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.contact-info div {
+    flex-basis: 48%;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.contact-info img {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Working days styles */
+.working-days {
+    margin-bottom: 20px;
+}
+
+.working-days table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.working-days th,
+.working-days td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+.card {
+    position: relative;
+    background: #16478d;
+    border-radius: 5px;
+    padding: 20px 0 30px 0;
+    margin: 4% auto;
+    box-sizing: border-box;
+    box-shadow: 0 20px 22px -15px rgb(0 0 0);
+    -webkit-transition: .3s ease;
+    transition: .3s ease;
+}
+
+/* Responsive styles */
+@media only screen and (max-width: 600px) {
+    .contact-info div {
+        flex-basis: 100%;
+    }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 768px) {
+    .contact-info div {
+        flex-basis: 48%;
+    }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 992px) {
+    .contact-info div {
+        flex-basis: 48%;
+    }
+}
+
+@media only screen and (min-width: 993px) and (max-width: 1200px) {
+    .contact-info div {
+        flex-basis: 48%;
+    }
+}

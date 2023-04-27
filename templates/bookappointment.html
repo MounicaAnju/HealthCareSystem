@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/css/login.css">
+    <link rel="stylesheet" href="static/css/nav-bar.css">
+    <link rel="stylesheet" href="static/css/footer.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.5/jquery.inputmask.min.js"></script>
+    <style>
+        .input-container.error .bar {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="{{url_for('index')}}"><img src="static/images/logo.png" alt="Medicare Logo"></a>
+            <a style="text-decoration: none" href="./index.html">
+                <h1>Health Care System</h1>
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{url_for('aboutus')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>About Us</a></li>
+                <li><a href="{{ url_for('services')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Services</a>
+                </li>
+                <li><a href="{{ url_for('bookappointment')}}"><span><i class="fa fa-search"></i></span>Book Appointment</a>
+                </li>
+                <li><a href="{{ url_for('login') }}"><span><i class="fa fa-file-text"></i></span>Login</a></li>
+                <li><a href="{{ url_for('createaccount')}}"> Sign Up</a></li>
+                <li><a href="{{url_for('analytics')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Analytics</a>
+                </li>
+                <li><a href="{{url_for('contactus')}}"><span><i class="fa fa-file-text"></i></span>Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="card"></div>
+        <div class="card">
+            <h1 class="title"> Appointment Form
+                <div class="close"></div>
+            </h1>
+            <form novalidate>
+                <div class="input-container" id="fname-container">
+                    <input type="text" id="first-name" required="required" />
+                    <label for="first-name"><i class="fa fa-user"></i> &nbsp; First Name </label>
+                    <div class="bar"></div>
+                </div>
+                <div class="input-container"><span style="color:red" class="fname-error-message"></span></div>
+                <div class="input-container" id="lname-container">
+                    <input type="text" id="last-name" required="required" />
+                    <label for="last-name"><i class="fa fa-user"></i> &nbsp; Last Name </label>
+                    <div class="bar"></div>
+                </div>
+                <div class="input-container"><span style="color:red" class="lname-error-message"></span></div>
+                <div class="input-container" id="age-container">
+                    <input type="number" id="age" required="required" />
+                    <label for="age"><i class="fa fa-user"></i> &nbsp; Age </label>
+                    <div class="bar"></div>
+                </div>
+                <div class="input-container"><span style="color:red" class="age-error-message"></span></div>
+                <div class="input-container" id="address-container">
+                    <input type="text" id="address" required="required" />
+                    <label for="address"><i class="fa fa-user"></i> &nbsp; Address </label>
+                    <div class="bar"></div>
+                </div>
+                <div class="input-container"><span style="color:red" class="address-error-message"></span></div>
+                <div class="input-container" id="gender-container">
+                    <label for="gender" class="dropdown-label"></label>
+                    <select id="gender" class="dropdown-select">
+                        <option value="">Select Gender</option>
+                        <option value="link1">Male</option>
+                        <option value="link2">Female</option>
+                    </select>
+                    <div class="bar"></div>
+                </div>
+                <div class="input-container"><span style="color:red" class="gender-error-message"></span></div>
+                <div class="input-container" id="email-container">
+                    <input type="email" id="email" required="required" />
+                    <label for="email"><i class="fa fa-user"></i> &nbsp; Email </label>
+                    <div class="bar"></div>
+                </div>
+                <div class="input-container"><span style="color:red" class="email-error-message"></span></div>
+                <div class="input-container" id="phone-container">
+                    <input type="tel" id="phone-number" name="phone-number" required="required">
+                    <label for="phone-number"><i class="fa fa-user"></i> &nbsp; Phone Number </label>
+                    <div class="bar"></div>
+                </div>
+                <div class="input-container"><span style="color:red" class="phone-error-message"></span></div>
+
+                <div class="input-container" id="doctor-container">
+                    <label for="doctor" class="dropdown-label"></label>
+                    <select id="doctor" class="dropdown-select">
+                        <option value="">Choose a Doctor</option>
+                        <option value="Naveen - Pediatrician">Naveen - Pediatrician</option>
+                        <option value="Meghanjali - Cardiologist">Meghanjali - Cardiologist</option>
+                        <option value="Surendra - Dentist">Surendra - Dentist</option>
+                        <option value="Mounica - Chiropractor">Mounica - Chiropractor</option>
+                        <option value="Gagan - Ophthalmologist">Gagan - Ophthalmologist</option>
+                        <option value="Akshay - Dermatologist">Akshay - Dermatologist</option>
+                        <option value="Kushal - Gastroenterologist">Kushal - Gastroenterologist</option>
+                    </select>
+                    <div class="bar"></div>
+                </div>
+                <div class="input-container"><span style="color:red;" class="doctor-error-message"></span></div>
+
+                <div class="input-container" id="datetime-container">
+                    <div style="color: white">Choose Appointment Date & Time</div>
+                    <label for="datetime-local"></label>
+                    <input type="datetime-local" id="datetime-local" name="datetime-local" required="required" />
+                </div>
+                <div class="input-container"><span style="color:red;" class="datetime-error-message"></span></div>
+
+                <div class="input-container">
+                    <input type="textarea" id="msg" value="" />
+                    <label for="msg"><i class="fa fa-lock"></i> &nbsp; Your Message</label>
+                    <div class="bar"></div>
+                </div>
+                <div class="button-container">
+                    <button><span>SCHEDULE APPOINTMENT &nbsp;&nbsp;<i class="fa fa-chevron-right"></i></span></button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2023 Medicare Healthcare System. All rights reserved.</p>
+    </footer>
+    <script>
+        const firstName = document.getElementById("first-name");
+        const lastName = document.getElementById("last-name");
+        const age = document.getElementById("age");
+        const address = document.getElementById("address");
+        const gender = document.getElementById("gender");
+        const email = document.getElementById("email");
+        const phoneNumber = document.getElementById("phone-number");
+        const doctor = document.getElementById("doctor");
+        const msg = document.getElementById("msg");
+        const datenow = new Date();
+        const currentDateTime = datenow.toISOString().slice(0, 16);
+        const datetime = document.getElementById('datetime-local')
+        const currentdate = datetime.setAttribute('min', currentDateTime);
+
+        const firstNameLabel = document.querySelector('label[for="first-name"]');
+        const lastNameLabel = document.querySelector('label[for="last-name"]');
+        const ageLabel = document.querySelector('label[for="age"]');
+        const addressLabel = document.querySelector('label[for="address"]');
+        const genderLabel = document.querySelector('label[for="gender"]');
+        const emailLabel = document.querySelector('label[for="email"]');
+        const phoneNumberLabel = document.querySelector('label[for="phone-number"]');
+        const doctorLabel = document.querySelector('label[for="doctor"]');
+        const msgLabel = document.querySelector('label[for="msg"]');
+        const datetimeLabel = document.querySelector('label[for="datetime-local"]');
+
+
+        firstName.addEventListener("focusout", function () {
+            validateField(firstName, firstNameLabel, 'fname-error-message', /^[a-zA-Z]+(([\'\,\.\- ][a-zA-Z ])?[a-zA-Z]*)*$/, "fname-container", "First Name is required", "First Name is invalid and can contains letters (uppercase or lowercase), spaces, hyphens, apostrophes, commas, and periods");
+        });
+
+        lastName.addEventListener("focusout", function () {
+            validateField(lastName, lastNameLabel, 'lname-error-message', /^[a-zA-Z]+(([\'\,\.\- ][a-zA-Z ])?[a-zA-Z]*)*$/, "lname-container", "Last Name is required", "Last Name is invalid and can contains letters (uppercase or lowercase), spaces, hyphens, apostrophes, commas, and periods");
+        });
+
+        age.addEventListener("focusout", function () {
+            if (age.value.length > 3) {
+                age.value = age.value.substring(0, 3);
+            }
+            validateField(age, ageLabel, 'age-error-message', /^[0-9]{1,3}$/, "age-container", "Age is required", "Age is required");
+        });
+
+        address.addEventListener("focusout", function () {
+            validateField(address, addressLabel, 'address-error-message', /^[a-zA-Z0-9]+[\s]*[a-zA-Z0-9.\-\,\#\:]+[\s]*[a-zA-Z0-9.\-\,\#\:]+[a-zA-Z0-9\s.\-\,\#\:]*$/, "address-container", "Address is required", "Address is invalid it should contain minimum 3 letters and can contain letters, numbers, spaces, commas, dots, dashes, hash, and colon, but cannot start with these.");
+        });
+
+        gender.addEventListener("focusout", function () {
+            validateField(gender, genderLabel, 'gender-error-message', null, "gender-container", "Gender is required", "Gender is required");
+        });
+
+        email.addEventListener("focusout", function () {
+            validateField(email, emailLabel, 'email-error-message', /^((([!#$%&'*+\-/=?^_`{|}~\w])|([!#$%&'*+\-/=?^_`{|}~\w][!#$%&'*+\-/=?^_`{|}~\.\w]{0,}[!#$%&'*+\-/=?^_`{|}~\w]))[@]\w+([-.]\w+)*\.\w+([-.]\w+)*)$/, "email-container", "Email is required", "Please enter a valid email address");
+        });
+
+        phoneNumber.addEventListener("focusout", function () {
+            maskPhoneNumber();
+            validatePhoneNumber(phoneNumber, phoneNumberLabel, "phone-container", "Phone number is required");
+        });
+
+        doctor.addEventListener("focusout", function () {
+            validateField(doctor, doctorLabel, 'doctor-error-message', null, "doctor-container", "Doctor Field is required", "Doctor Field is required");
+        });
+
+        datetime.addEventListener("focusout", function () {
+
+
+            validateField(datetime, datetimeLabel, 'datetime-error-message', null, "datetime-container", "Date Field is required", "Date Field is required");
+        });
+
+        firstName.addEventListener("input", function () {
+            validateField(firstName, firstNameLabel, 'fname-error-message', /^[a-zA-Z]+(([\'\,\.\- ][a-zA-Z ])?[a-zA-Z]*)*$/, "fname-container", "First Name is required", "First Name is invalid and can contains letters (uppercase or lowercase), spaces, hyphens, apostrophes, commas, and periods");
+        });
+
+        lastName.addEventListener("input", function () {
+            validateField(lastName, lastNameLabel, 'lname-error-message', /^[a-zA-Z]+(([\'\,\.\- ][a-zA-Z ])?[a-zA-Z]*)*$/, "lname-container", "Last Name is required", "Last Name is invalid and can contains letters (uppercase or lowercase), spaces, hyphens, apostrophes, commas, and periods");
+        });
+
+        age.addEventListener("input", function () {
+            if (age.value.length > 3) {
+                age.value = age.value.substring(0, 3);
+            }
+            validateField(age, ageLabel, 'age-error-message', /^[0-9]{1,3}$/, "age-container", "Age is required", "Age is required");
+        });
+
+        address.addEventListener("input", function () {
+            validateField(address, addressLabel, 'address-error-message', /^[a-zA-Z0-9]+[\s]*[a-zA-Z0-9.\-\,\#\:]+[\s]*[a-zA-Z0-9.\-\,\#\:]+[a-zA-Z0-9\s.\-\,\#\:]*$/, "address-container", "Address is required", "Address is invalid it should contain minimum 3 letters and can contain letters, numbers, spaces, commas, dots, dashes, hash, and colon, but cannot start with these.");
+        });
+
+        gender.addEventListener("input", function () {
+            validateField(gender, genderLabel, 'gender-error-message', null, "gender-container", "Gender is required", "Gender is required");
+        });
+
+        email.addEventListener("input", function () {
+            validateField(email, emailLabel, 'email-error-message', /^((([!#$%&'*+\-/=?^_`{|}~\w])|([!#$%&'*+\-/=?^_`{|}~\w][!#$%&'*+\-/=?^_`{|}~\.\w]{0,}[!#$%&'*+\-/=?^_`{|}~\w]))[@]\w+([-.]\w+)*\.\w+([-.]\w+)*)$/, "email-container", "Email is required", "Please enter a valid email address");
+        });
+
+        phoneNumber.addEventListener("input", function () {
+            maskPhoneNumber();
+            validatePhoneNumber(phoneNumber, phoneNumberLabel, "phone-container", "Phone number is required");
+        });
+
+        doctor.addEventListener("input", function () {
+            validateField(doctor, doctorLabel, 'doctor-error-message', null, "doctor-container", "Doctor Field is required", "Doctor Field is required");
+        });
+
+        datetime.addEventListener("input", function () {
+
+            validateField(datetime, datetimeLabel, 'datetime-error-message', null, "datetime-container", "Date Field is required", "Date Field is required");
+        });
+
+        function validateField(inputField, inputFieldLabel, errorMessageClass, pattern, barErrorCOntainer, requiredErrorMessage, customErrorMessage, required = true) {
+            const fieldValue = inputField.value.trim();
+            const errorMessage = document.querySelector('.' + errorMessageClass);
+            var container = document.getElementById(barErrorCOntainer);
+            if (required && fieldValue === "") {
+                errorMessage.innerText = requiredErrorMessage;
+                container.classList.add("error");
+                return false;
+            }
+            if (pattern && !pattern.test(fieldValue)) {
+                errorMessage.innerText = customErrorMessage;
+                inputFieldLabel.style.webkitTransform = 'translate(-12%, -65%) scale(0.75)';
+                inputFieldLabel.style.transform = 'translate(-12%, -65%) scale(0.75)';
+                inputFieldLabel.style.color = '#b5c3d8';
+                container.classList.add("error");
+                return false;
+            }
+            container.classList.remove("error");
+            errorMessage.innerText = "";
+            return true;
+        }
+
+        function maskPhoneNumber() {
+            $("#phone-number").inputmask("(999) 999-9999");
+        }
+
+        function validatePhoneNumber(inputField, inputFieldLabel, barErrorCOntainer, requiredErrorMessage) {
+            let phoneNumber = inputField.value;
+            var container = document.getElementById(barErrorCOntainer);
+            const errorMessage = document.querySelector('.phone-error-message');
+            let phoneRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
+            if (phoneRegex.test(phoneNumber)) {
+                errorMessage.innerText = "";
+                container.classList.remove("error");
+                return true;
+            } else {
+                errorMessage.innerText = requiredErrorMessage;
+                inputFieldLabel.style.webkitTransform = 'translate(-12%, -65%) scale(0.75)';
+                inputFieldLabel.style.transform = 'translate(-12%, -65%) scale(0.75)';
+                inputFieldLabel.style.color = '#b5c3d8';
+                container.classList.add("error");
+                return false;
+            }
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+
+            // Validate the form values
+            const firstNameValue = document.getElementById("first-name").value.trim();
+            const lastNameValue = document.getElementById("last-name").value.trim();
+            const ageValue = document.getElementById("age").value.trim();
+            const addressValue = document.getElementById("address").value.trim();
+            const genderValue = document.getElementById("gender").value.trim();
+            const emailValue = document.getElementById("email").value.trim();
+            const phoneNumberValue = document.getElementById("phone-number").value.trim();
+            const doctorValue = document.getElementById("doctor").value.trim();
+            const msgValue = document.getElementById("msg").value;
+            const datetimeValue = document.getElementById("datetime-local").value;
+
+            let isValid = 0;
+
+            if (!validateField(firstName, firstNameLabel, 'fname-error-message', /^[a-zA-Z]+(([\'\,\.\- ][a-zA-Z ])?[a-zA-Z]*)*$/, "fname-container", "First Name is required", "First Name is invalid and can contains letters (uppercase or lowercase), spaces, hyphens, apostrophes, commas, and periods")) {
+                isValid++;
+            }
+
+            if (!validateField(lastName, lastNameLabel, 'lname-error-message', /^[a-zA-Z]+(([\'\,\.\- ][a-zA-Z ])?[a-zA-Z]*)*$/, "lname-container", "Last Name is required", "Last Name is invalid and can contains letters (uppercase or lowercase), spaces, hyphens, apostrophes, commas, and periods")) {
+                isValid++;
+            }
+
+            if (!validateField(age, ageLabel, 'age-error-message', /^[0-9]{1,3}$/, "age-container", "Age is required", "Age is required")) {
+                isValid++;
+            };
+
+            if (!validateField(address, addressLabel, 'address-error-message', /^[a-zA-Z0-9]+[\s]*[a-zA-Z0-9.\-\,\#\:]+[\s]*[a-zA-Z0-9.\-\,\#\:]+[a-zA-Z0-9\s.\-\,\#\:]*$/, "address-container", "Address is required", "Address is invalid and can contain letters, numbers, spaces, commas, dots, dashes, hash, and colon, but cannot start with these.")) {
+                isValid++;
+            }
+
+            if (!validateField(gender, genderLabel, 'gender-error-message', null, "gender-container", "Gender is required", "Gender is required")) {
+                isValid++;
+            }
+
+            if (!validateField(email, emailLabel, 'email-error-message', /^((([!#$%&'*+\-/=?^_`{|}~\w])|([!#$%&'*+\-/=?^_`{|}~\w][!#$%&'*+\-/=?^_`{|}~\.\w]{0,}[!#$%&'*+\-/=?^_`{|}~\w]))[@]\w+([-.]\w+)*\.\w+([-.]\w+)*)$/, "email-container", "Email is required", "Please enter a valid email address")) {
+                isValid++;
+            }
+
+            maskPhoneNumber();
+            if (!validatePhoneNumber(phoneNumber, phoneNumberLabel, "phone-container", "Phone number is required")) {
+                isValid++;
+            }
+
+            if (!validateField(doctor, doctorLabel, 'doctor-error-message', null, "doctor-container", "Doctor Field is required", "Doctor Field is required")) {
+                isValid++;
+            }
+
+            if (!validateField(datetime, datetimeLabel, 'datetime-error-message', null, "datetime-container", "Date Field is required", "Date Field is required")) {
+                isValid++;
+            }
+
+
+
+            // Submit the form if it is valid
+            if (isValid == 0) {
+                console.log('First Name:', firstNameValue);
+                console.log('Last Name:', lastNameValue);
+                console.log('Age:', ageValue);
+                console.log('Address:', addressValue);
+                console.log('Gender:', genderValue);
+                console.log('Email:', emailValue);
+                console.log('Phone Number:', phoneNumberValue);
+                console.log('doctor:', doctorValue);
+                console.log('datetime:', datetimeValue);
+                console.log('msg:', msgValue);
+
+                console.log('Saving to local storage...');
+                const formData = {
+                    firstName: firstNameValue,
+                    lastName: lastNameValue,
+                    age: ageValue,
+                    address: addressValue,
+                    gender: genderValue,
+                    email: emailValue,
+                    phoneNumber: phoneNumberValue,
+                    doctor: doctorValue,
+                    datetime: datetimeValue,
+                    msg: msgValue
+                };
+                localStorage.setItem('formData', JSON.stringify(formData));
+                alert("Appointment Booked Successfully");
+
+                resetForm();
+                // document.querySelector("form").submit();
+            } else {
+                console.log('Form is not valid. Data not saved to local storage.');
+            }
+        }
+
+        function resetForm() {
+            isValid = 0;
+            // Validate the form values
+            const formAttributes = ["first-name", "last-name", "age", "address", "gender", "email", "phone-number", "doctor", "datetime-local", "msg"];
+            for (let i = 0; i < formAttributes.length; i++) {
+                document.getElementById(formAttributes[i]).value = "";
+            }
+        }
+
+        document.querySelector("form").addEventListener("submit", submitForm);
+
+    </script>
+</body>
+
+</html>

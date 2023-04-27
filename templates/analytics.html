@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Health Care System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/login.css">
+    <link rel="stylesheet" href="static/css/nav-bar.css">
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="static/css/footer.css">
+    <link rel="stylesheet" href="static/css/analytics.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+</head>
+
+<body>
+    <div class="back-ground-img">
+        <header>
+            <div class="logo">
+                <a href="{{url_for('index')}}"><img src="static/images/logo.png" alt="Medicare Logo"></a>
+                <a style="text-decoration: none" href="./index.html">
+                    <h1>Health Care System</h1>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{{url_for('aboutus')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>About Us</a></li>
+                    <li><a href="{{ url_for('services')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Services</a>
+                    </li>
+                    <li><a href="{{ url_for('bookappointment')}}"><span><i class="fa fa-search"></i></span>Book Appointment</a>
+                    </li>
+                    <li><a href="{{ url_for('login') }}"><span><i class="fa fa-file-text"></i></span>Login</a></li>
+                    <li><a href="{{ url_for('createaccount')}}"> Sign Up</a></li>
+                    <li><a href="{{url_for('analytics')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Analytics</a>
+                    </li>
+                    <li><a href="{{url_for('contactus')}}"><span><i class="fa fa-file-text"></i></span>Contact Us</a></li>
+                    </ul>
+            </nav>
+        </header>
+        <div class="container">
+            <div class="about-section">
+                <img src="static/images/healthcare-analytics.jpg" alt="About us Medicare Photo">
+                <h2>Medicare Healthcare System Analytics</h2>
+                <p>
+                    Medicare is a government-funded healthcare system in the United States that provides health coverage
+                    to individuals aged 65 and older, as well as to those with certain disabilities and medical
+                    conditions. Medicare analytics involves the analysis and interpretation of data related to the
+                    Medicare program, including its costs, utilization, and health outcomes.
+
+                    Medicare analytics can help identify trends and patterns in healthcare utilization, costs, and
+                    outcomes among different patient populations, geographic regions, and healthcare providers. By
+                    analyzing this data, policymakers, healthcare providers, and researchers can better understand the
+                    impact of the Medicare program on patient health and healthcare delivery, as well as identify
+                    opportunities for improvement.
+                </p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="about-section">
+                <h2>Professional Doctors and their Patient Case Load</h2>
+                <div class="profile">
+                    <div class="profile-info">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                    <p class="description">
+                        A pie chart that presents information about the number of cases handled by each professional treated in a
+                        healthcare setting. The chart is user-friendly and easy to comprehend, with labels showing the
+                        types of professionals treated the number of cases and the values representing the number of cases. The
+                        colors used in the chart indicate different categories of professionals. This chart can help
+                        healthcare providers make informed decisions regarding staffing, resource allocation, and
+                        patient care by providing insights into the number of cases by each professional they are treating. The chart
+                        is also designed to be responsive to various screen sizes, making it accessible to users on
+                        different devices. The horizontal orientation of the chart makes it easy to compare different
+                        categories of professionals treated their cases.
+                    </p>
+                </div>
+                <div class="profile">
+                    <h2>Patient Cases Handled</h2>
+                    <div class="profile-info">
+                        <canvas id="barchart"></canvas>
+                    </div>
+                    
+                    <p class="description">
+                        A bar chart that presents information about the number of cases treated in a
+                        healthcare setting. The chart is user-friendly and easy to comprehend, with labels showing the
+                        types of professionals treated and the values representing the number of professionals. The
+                        colors used in the chart indicate different months of treated cases. This chart can help
+                        healthcare providers make informed decisions regarding staffing, resource allocation, and
+                        patient care by providing insights into the number of professionals they are treating. The chart
+                        is also designed to be responsive to various screen sizes, making it accessible to users on
+                        different devices. The horizontal orientation of the chart makes it easy to compare different
+                        categories of professionals treated.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <p>&copy; 2023 Medicare Healthcare System. All rights reserved.</p>
+        </footer>
+        <script>
+            function createPieChart() {
+                var data = {
+                    professionalsTreated: {
+                        labels: ["Pediatrician", "Cardiologist", "Dentist", "Chiropractor", "Ophthalmologist", "Dermatologist", "Gastroenterologist"],
+                        values: [20, 30, 40, 50, 60, 60, 10]
+                    }
+                };
+
+                var ctx = document.getElementById("pieChart").getContext("2d");
+                var chart = new Chart(ctx, {
+                    type: "pie",
+                    data: {
+                        labels: data.professionalsTreated.labels,
+                        datasets: [
+                            {
+                                label: "Patient Treated",
+                                data: data.professionalsTreated.values,
+                                backgroundColor: [
+                                    "#007bff",
+                                    "#dc3545",
+                                    "#ffc107",
+                                    "#28a745",
+                                    "#6f42c1",
+                                    "#17a2b8",
+                                    "#fd7e14"
+                                ],
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true
+                    }
+                });
+            }
+
+            function createBarChart() {
+                var ctx = document.getElementById('barchart').getContext('2d');
+
+                // Set the data for the chart
+                var data = {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Number of Cases',
+                        data: [20, 30, 40, 50, 60, 70],
+                        backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)'],
+                        borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+                        borderWidth: 1
+                    }]
+                };
+
+                // Set the options for the chart
+                var options = {
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    responsive: true
+                };
+
+                // Create the chart
+                var myChart = new Chart(ctx, {
+                    type: 'horizontalBar',
+                    data: data,
+                    options: options
+                });
+            }
+
+            createPieChart();
+            createBarChart();
+        </script>
+    </div>
+</body>
+
+</html>

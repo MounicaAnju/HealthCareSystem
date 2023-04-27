@@ -1,0 +1,17 @@
+.container {
+    max-width: 360px;
+}
+
+article {
+    padding: 10px;
+    margin: 10px;
+    background: #a8a8a8;
+    flex: 1 200px;
+}
+
+/* Add your flexbox CSS below here */
+section {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

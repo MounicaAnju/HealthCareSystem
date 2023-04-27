@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/css/login.css">
+    <link rel="stylesheet" href="static/css/nav-bar.css">
+    <link rel="stylesheet" href="static/css/footer.css">
+
+    <style>
+        /* .success-popup {
+            position: fixed;
+            top: 10%;
+            right: 10%;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            z-index: 9999;
+            display: none;
+        } */
+        footer {
+            position: fixed;
+        }
+
+        .input-container.input-error .bar {
+            background-color: red;
+        }
+
+        /* Extra Small Devices, Phones (portrait) */
+        @media only screen and (max-width: 720px) and (max-height: 800px) {
+            footer {
+                position: inherit;
+            }
+        }
+    </style>
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="{{url_for('index')}}"><img src="static/images/logo.png" alt="Medicare Logo"></a>
+            <a style="text-decoration: none" href="./index.html">
+                <h1>Health Care System</h1>
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{url_for('aboutus')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>About Us</a></li>
+                <li><a href="{{ url_for('services')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Services</a>
+                </li>
+                <li><a href="{{ url_for('bookappointment')}}"><span><i class="fa fa-search"></i></span>Book Appointment</a>
+                </li>
+                <li><a href="{{ url_for('login') }}"><span><i class="fa fa-file-text"></i></span>Login</a></li>
+                <li><a href="{{ url_for('createaccount')}}"> Sign Up</a></li>
+                <li><a href="{{url_for('analytics')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Analytics</a>
+                </li>
+                <li><a href="{{url_for('contactus')}}"><span><i class="fa fa-file-text"></i></span>Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="card"></div>
+        <div class="card">
+            <h1 class="title"> Login
+                <div class="close"></div>
+            </h1>
+            <form novalidate>
+                <div class="input-container" id="email-container">
+                    <div></div>
+                    <input type="email" id="email" required="required" />
+                    <label for="email"><i class="fa fa-user"></i> &nbsp; Email </label>
+                    <div class="bar"></div>
+                </div>
+                <div class="input-container"><span style="color:red" class="email-error-message"></span></div>
+                <div class="input-container" id="password-container">
+                    <input type="password" id="password" value="" required="required" />
+                    <label for="password"><i class="fa fa-lock"></i> &nbsp; Password</label>
+                    <div class="bar"></div>
+                </div>
+                <div class="input-container"><span style="color:red" class="password-error-message"></span></div>
+                <div class="button-container">
+                    <button><span>Login &nbsp;&nbsp;<i class="fa fa-chevron-right"></i></span></button>
+                </div>
+                <div class="forgot-password">
+                    <a href="forgotpassword.html">Forgot Password?</a>
+                </div>
+            </form>
+
+        </div>
+        <div class="success-popup" style="display: none;">
+            Logged in successfully!
+        </div>
+
+    </div>
+    <script>
+        const form = document.querySelector('form');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const emailErrorMessage = document.querySelector('.email-error-message');
+        const passwordErrorMessage = document.querySelector('.password-error-message');
+        const successPopup = document.querySelector('.success-popup');
+
+        const emailLabel = document.querySelector('label[for="email"]');
+        const passwordLabel = document.querySelector('label[for="password"]');
+
+        function showError(inputElement, errorMessage, inputFieldLabel) {
+            inputElement.parentElement.classList.add('input-error');
+            inputFieldLabel.style.webkitTransform = 'translate(-12%, -65%) scale(0.75)';
+            inputFieldLabel.style.transform = 'translate(-12%, -65%) scale(0.75)';
+            inputFieldLabel.style.color = '#b5c3d8';
+            errorMessage.textContent = inputElement.validationMessage;
+        }
+
+        function hideError(inputElement, errorMessage) {
+            inputElement.parentElement.classList.remove('input-error');
+            errorMessage.textContent = '';
+        }
+
+        function validateEmail() {
+            if (email.validity.valueMissing) {
+                showError(email, emailErrorMessage, emailLabel);
+            } else if (email.validity.typeMismatch) {
+                showError(email, emailErrorMessage, emailLabel);
+                emailErrorMessage.textContent = 'Please enter a valid email address';
+            } else {
+                hideError(email, emailErrorMessage);
+            }
+        }
+
+        function validatePassword() {
+            if (password.validity.valueMissing) {
+                showError(password, passwordErrorMessage, passwordLabel);
+            } else {
+                hideError(password, passwordErrorMessage);
+            }
+        }
+
+        function handleBlur(event) {
+            if (event.target === email) {
+                validateEmail();
+            } else if (event.target === password) {
+                validatePassword();
+            }
+        }
+
+
+        function validateUser() {
+            const formData = JSON.parse(localStorage.getItem('formData'));
+            const storedEmail = formData.email
+            const storedPassword = formData.password
+            if (email.value === storedEmail && password.value === storedPassword) {
+                return true;
+            } else {
+                showError(password, passwordErrorMessage, passwordLabel);
+                passwordErrorMessage.textContent = 'It seems like you didnt Sign Up. Please Sign Up.';
+                return false;
+            }
+        }
+
+        email.addEventListener('input', validateEmail);
+        password.addEventListener('input', validatePassword);
+
+        email.addEventListener('blur', handleBlur);
+        password.addEventListener('blur', handleBlur);
+
+        // // Show the success popup
+        // function showSuccessPopup() {
+        //     var successPopup = document.querySelector('.success-popup');
+        //     successPopup.style.display = 'block';
+        //     setTimeout(function () {
+        //         successPopup.style.display = 'none';
+        //     }, 2000);
+        // }
+
+        // // Call the showSuccessPopup() function when the login is successful
+        // if (loginSuccessful) {
+        //     showSuccessPopup();
+        // }
+
+        function validateForm(event) {
+            event.preventDefault();
+            validateEmail();
+            validatePassword();
+            if (form.checkValidity() && validateUser()) {
+                // popup
+                //successPopup.style.display = 'block';
+                window.location.href = 'analytics.html';
+            }
+        }
+
+        form.addEventListener('submit', validateForm);
+    </script>
+    <footer>
+        <p>&copy; 2023 Medicare Healthcare System. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

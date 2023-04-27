@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Contact Us - Medicare Management System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="static/css/login.css">
+  <link rel="stylesheet" href="static/css/nav-bar.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/appointment-form.css">
+  <link rel="stylesheet" href="static/css/contact-us.css">
+  <link rel="stylesheet" href="static/css/footer.css">
+  <link rel="stylesheet" href="static/css/styles.css">
+</head>
+
+<style>
+  .error {
+    border-color: red;
+  }
+</style>
+
+<body>
+  <div class="back-ground-img">
+    <header>
+      <div class="logo">
+        <a href="{{url_for('index')}}"><img src="static/images/logo.png" alt="Medicare Logo"></a>
+        <a style="text-decoration: none" href="./index.html">
+          <h1>Health Care System</h1>
+        </a>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="{{url_for('aboutus')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>About Us</a></li>
+          <li><a href="{{ url_for('services')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Services</a>
+          </li>
+          <li><a href="{{ url_for('bookappointment')}}"><span><i class="fa fa-search"></i></span>Book Appointment</a>
+          </li>
+          <li><a href="{{ url_for('login') }}"><span><i class="fa fa-file-text"></i></span>Login</a></li>
+          <li><a href="{{ url_for('createaccount')}}"> Sign Up</a></li>
+          <li><a href="{{url_for('analytics')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Analytics</a>
+          </li>
+          <li><a href="{{url_for('contactus')}}"><span><i class="fa fa-file-text"></i></span>Contact Us</a></li>
+        </ul>
+      </nav>
+    </header>
+    <section>
+      <div class="container">
+        <div class="content">
+          <div class="left-side">
+            <div class="address details">
+              <i class="fas fa-map-marker-alt"></i>
+              <div class="topic">Address</div>
+              <div class="text-one">1234 Medicare St.<br> Anytown, USA 12345</div>
+            </div>
+            <div class="phone details">
+              <i class="fas fa-phone-alt"></i>
+              <div class="topic">Phone</div>
+              <div class="text-one">+1 1234567890</div>
+              <div class="text-two">+1 1234567890</div>
+            </div>
+            <div class="email details">
+              <i class="fas fa-envelope"></i>
+              <div class="topic">Email</div>
+              <div class="text-one">support@medicare.com</div>
+              <div class="text-two">info.medicare@medicare.com</div>
+            </div>
+          </div>
+          <div class="right-side">
+            <div class="topic-text">Send us a message</div>
+            <form novalidate>
+              <div class="input-box" id="name-container">
+                <input type="text" id="name" placeholder="Enter your name" minlength="1" maxlength="50" required>
+
+              </div>
+              <div class="input-container">
+                <span style="color:red" class="name-error-message"></span>
+              </div>
+
+
+              <div class="input-box" id="email-container">
+                <input type="email" id="email" placeholder="Enter your email" required>
+                <!-- <div class="bar"></div> -->
+              </div>
+              <div class="input-container">
+                <span style="color:red" class="email-error-message"></span>
+              </div>
+
+              <div class="input-box" id="message-container">
+                <textarea id="message" placeholder="Message" rows="5" required></textarea>
+
+              </div>
+              <div class="input-container">
+                <span style="color:red" class="message-error"></span>
+              </div>
+
+              <div class="button">
+                <input type="submit" value="Send Now">
+              </div>
+            </form>
+
+
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="container">
+        <div class="contact-info">
+          <div>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3520.887379643608!2d-82.41129808563753!3d28.058463116582203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c2c7c76c083cf1%3A0x5b9f6aef2f2f7c0b!2sMuma%20College%20of%20Business!5e0!3m2!1sen!2sus!4v1679083798803!5m2!1sen!2sus"
+              width="100%" height="370" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          <div class="working-days">
+            <img src="images/logo.png" alt="Medicare Logo">
+            <h2>Working Days and Hours</h2>
+            <table>
+              <tr>
+                <th>Monday</th>
+                <td>9am - 8pm</td>
+              </tr>
+              <tr>
+                <th>Tuesday</th>
+                <td>9am - 8pm</td>
+              </tr>
+              <tr>
+                <th>Wednesday</th>
+                <td>9am - 8pm</td>
+              </tr>
+              <tr>
+                <th>Thursday</th>
+                <td>9am - 8pm</td>
+              </tr>
+              <tr>
+                <th>Friday</th>
+                <td>9am - 5pm</td>
+              </tr>
+              <tr>
+                <th>Saturday</th>
+                <td>9am - 5pm</td>
+              </tr>
+              <tr>
+                <th>Sunday</th>
+                <td>9am - 5pm</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <script>
+        const nameField = document.getElementById('name');
+        const emailField = document.getElementById('email');
+        const messageField = document.getElementById('message');
+        nameField.addEventListener("focusout", function () {
+          validateField(nameField, 'name-error-message', /^[a-zA-Z]+(([\'\,\.\- ][a-zA-Z ])?[a-zA-Z]*)*$/, "name", "Name is required", "Name is invalid and can contains letters (uppercase or lowercase), spaces, hyphens, apostrophes, commas, and periods");
+        });
+        emailField.addEventListener("focusout", function () {
+          validateField(emailField, 'email-error-message', /^((([!#$%&'*+\-/=?^_`{|}~\w])|([!#$%&'*+\-/=?^_`{|}~\w][!#$%&'*+\-/=?^_`{|}~\.\w]{0,}[!#$%&'*+\-/=?^_`{|}~\w]))[@]\w+([-.]\w+)*\.\w+([-.]\w+)*)$/, "email", "Email is required", "Please enter a valid email address");
+        });
+        messageField.addEventListener("focusout", function () {
+          validateField(messageField, 'message-error', null, "message", "message is required", "Please enter a valid message");
+        });
+
+        nameField.addEventListener("input", function () {
+          validateField(nameField, 'name-error-message', /^[a-zA-Z]+(([\'\,\.\- ][a-zA-Z ])?[a-zA-Z]*)*$/, "name", "Name is required", "Name is invalid and can contains letters (uppercase or lowercase), spaces, hyphens, apostrophes, commas, and periods");
+        });
+        emailField.addEventListener("input", function () {
+          validateField(emailField, 'email-error-message', /^((([!#$%&'*+\-/=?^_`{|}~\w])|([!#$%&'*+\-/=?^_`{|}~\w][!#$%&'*+\-/=?^_`{|}~\.\w]{0,}[!#$%&'*+\-/=?^_`{|}~\w]))[@]\w+([-.]\w+)*\.\w+([-.]\w+)*)$/, "email", "Email is required", "Please enter a valid email address");
+        });
+        messageField.addEventListener("input", function () {
+          validateField(messageField, 'message-error', null, "message", "message is required", "Please enter a valid message");
+        });
+
+        function validateField(inputField, errorMessageClass, pattern, barErrorCOntainer, requiredErrorMessage, customErrorMessage, required = true) {
+          const fieldValue = inputField.value.trim();
+          const errorMessage = document.querySelector('.' + errorMessageClass);
+          var container = document.getElementById(barErrorCOntainer);
+          if (required && fieldValue === "") {
+            errorMessage.innerText = requiredErrorMessage;
+            container.classList.add("error");
+            return false;
+          }
+          if (pattern && !pattern.test(fieldValue)) {
+            errorMessage.innerText = customErrorMessage;
+            container.classList.add("error");
+            return false;
+          }
+          container.classList.remove("error");
+          errorMessage.innerText = "";
+          return true;
+        }
+
+        function submitForm(event) {
+          event.preventDefault();
+
+          // Validate the form values
+          const nameValue = document.getElementById("name").value.trim();
+          const emailValue = document.getElementById("email").value.trim();
+          const messageValue = document.getElementById("message").value.trim();
+          let isValid = 0;
+
+          if (!validateField(nameField, 'name-error-message', /^[a-zA-Z]+(([\'\,\.\- ][a-zA-Z ])?[a-zA-Z]*)*$/, "name", "Name is required", "Name is invalid and can contains letters (uppercase or lowercase), spaces, hyphens, apostrophes, commas, and periods")) {
+            isValid++;
+          }
+
+          if (!validateField(emailField, 'email-error-message', /^((([!#$%&'*+\-/=?^_`{|}~\w])|([!#$%&'*+\-/=?^_`{|}~\w][!#$%&'*+\-/=?^_`{|}~\.\w]{0,}[!#$%&'*+\-/=?^_`{|}~\w]))[@]\w+([-.]\w+)*\.\w+([-.]\w+)*)$/, "email", "Email is required", "Please enter a valid email address")) {
+            isValid++;
+          }
+
+
+          if (!validateField(messageField, 'message-error', null, "message", "message is required", "Please enter a valid message")) {
+            isValid++;
+          }
+
+          if (isValid == 0) {
+            console.log('First Name:', nameValue);
+            console.log('Email Name:', emailValue);
+            console.log('Message:', messageValue);
+            const formData = {
+              name: nameValue,
+              email: emailValue,
+              message: messageValue
+            };
+            localStorage.setItem('formData', JSON.stringify(formData));
+            alert("Thank You For Contacting Us.")
+
+            resetForm();
+            // document.querySelector("form").submit();
+          } else {
+            console.log('Form is not valid');
+          }
+        }
+        function resetForm() {
+          isValid = 0;
+          // Validate the form values
+          const formAttributes = ["name", "email", "message"];
+          for (let i = 0; i < formAttributes.length; i++) {
+            document.getElementById(formAttributes[i]).value = "";
+          }
+        }
+
+        document.querySelector("form").addEventListener("submit", submitForm);
+
+      </script>
+</body>
+
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Healthcare Management System</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS stylesheets -->
+    <link rel="stylesheet" href="static/css/nav-bar.css">
+    <link rel="stylesheet" href="static/css/footer.css">
+    <link rel="stylesheet" href="static/css/services.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="{{url_for('index')}}"><img src="static/images/logo.png" alt="Medicare Logo"></a>
+            <a style="text-decoration: none" href="./index.html"><h1>Health Care System</h1></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{url_for('aboutus')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>About Us</a></li>
+                <li><a href="{{ url_for('services')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Services</a>
+                </li>
+                <li><a href="{{ url_for('bookappointment')}}"><span><i class="fa fa-search"></i></span>Book Appointment</a>
+                </li>
+                <li><a href="{{ url_for('login') }}"><span><i class="fa fa-file-text"></i></span>Login</a></li>
+                <li><a href="{{ url_for('createaccount')}}"> Sign Up</a></li>
+                <li><a href="{{url_for('analytics')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Analytics</a>
+                </li>
+                <li><a href="{{url_for('contactus')}}"><span><i class="fa fa-file-text"></i></span>Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Main Content -->
+    <main>
+        <h2>Our Services</h2>
+        <div class="container">
+            <div class="service">
+                <img src="static/images/service1.jpg" alt="Patient Registration">
+                <h3>Patient Registration</h3>
+                <p>We provide an easy-to-use online registration system for patients, allowing them to securely enter
+                    their personal and medical information.</p>
+            </div>
+            <div class="service">
+                <img src="static/images/service2.jpg" alt="Electronic Medical Records">
+                <h3>Electronic Medical Records</h3>
+                <p>Our system allows for the secure storage and retrieval of patient medical records, including
+                    diagnoses, treatments, and test results.</p>
+            </div>
+            <div class="service">
+                <img src="static/images/service3.jpg" alt="Doctor Scheduling">
+                <h3>Doctor Scheduling</h3>
+                <p>Our system allows doctors to easily manage their schedules, view patient appointments, and receive
+                    automatic appointment reminders.</p>
+            </div>
+            <div class="service">
+                <img src="static/images/service4.png" alt="Real-time Monitoring">
+                <h3>Real-time Monitoring</h3>
+                <p>Our system includes real-time monitoring of patient vitals and health status, allowing for early
+                    detection of potential health problems.</p>
+            </div>
+            <div class="service">
+                <img src="static/images/service5.jpg" alt="Dentist">
+                <h3>Dentist</h3>
+                <p>Our system includes Professional teeth cleaning,Teeth Whitening, ToothFilling, RootCanalTreatment,
+                    ToothExtraction,
+                    Dentalimplants for detection of significant teeth problems.</p>
+            </div>
+            <div class="service">
+                <img src="static/images/service6.jpg" alt="Cardiologist">
+                <h3>Cardiologist</h3>
+                <p>Our system includes Heart Health Assessment, Diagnostic Testing, Echocardiography, Coronary
+                    Angiogram, Cardiac Rehabilitation that ensures safety of hearts for patients.</p>
+            </div>
+            <div class="service">
+                <img src="static/images/service7.jpg" alt="Pediatrician">
+                <h3>Pediatrician</h3>
+                <p>Our pediatricians provide comprehensive well-child visits and offer vaccinations
+                    to help protect your child from serious illnesses and diseases.</p>
+            </div>
+            <div class="service">
+                <img src="static/images/services8.jpg" alt="Chiropractor">
+                <h3>Chiropractor</h3>
+                <p>We offer manual therapy to help release tension in your muscles and joints,
+                    promoting healing and reducing pain.</p>
+            </div>
+            <div class="service">
+                <img src="static/images/service9.jpg" alt="Ophthalmologist">
+                <h3>Ophthalmologist</h3>
+                <p>Our ophthalmologist can provide effective management
+                    and treatment for glaucoma to help preserve your vision.</p>
+            </div>
+            <div class="service">
+                <img src="static/images/service10.jpg" alt="Dermatologist">
+                <h3>Dermatologist</h3>
+                <p>We offer a range of treatments to help manage psoriasis and eczema,
+                    including topical creams and light therapy.</p>
+            </div>
+            <div class="service">
+                <img src="static/images/service11.jpg" alt="Gynecologist">
+                <h3>Gynecologist</h3>
+                <p>Our gynecologist can perform a range of surgeries, including
+                    hysterectomies and laparoscopic procedures, to treat conditions such as fibroids and endometriosis.
+                </p>
+            </div>
+            <div class="service">
+                <img src="static/images/service12.jpg" alt="Gastroenterologist">
+                <h3>Gastroenterologist </h3>
+                <p>Our gastroenterologist can provide effective management and
+                    treatment for inflammatory bowel diseases such as Crohn's disease and ulcerative colitis.</p>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2023 Medicare Healthcare System. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

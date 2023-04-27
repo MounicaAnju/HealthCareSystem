@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Health Care System</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS stylesheets -->
+    <link rel="stylesheet" href="static/css/login.css">
+    <link rel="stylesheet" href="static/css/nav-bar.css">
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="static/css/footer.css">
+    <link rel="stylesheet" href="static/css/aboutus.css">
+    <link rel="stylesheet" href="static/css/services.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="{{url_for('index')}}"> <img src="static/images/logo.png" alt="Medicare Logo"></a>
+            <a style="text-decoration: none" href="./index.html"><h1>Health Care System</h1></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{url_for('aboutus')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>About Us</a></li>
+                <li><a href="{{ url_for('services')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Services</a>
+                </li>
+                <li><a href="{{ url_for('bookappointment')}}"><span><i class="fa fa-search"></i></span>Book Appointment</a>
+                </li>
+                <li><a href="{{ url_for('login') }}"><span><i class="fa fa-file-text"></i></span>Login</a></li>
+                <li><a href="{{ url_for('createaccount')}}"> Sign Up</a></li>
+                <li><a href="{{url_for('analytics')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Analytics</a>
+                </li>
+                <li><a href="{{url_for('contactus')}}"><span><i class="fa fa-file-text"></i></span>Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="about-section">
+            <img src="static/images/doctor about us.jpeg" alt="About us Medicare Photo">
+            <h2>About Medicare Healthcare System</h2>
+            <p>
+                Welcome to our healthcare management system website. Our organization is committed to providing
+                high-quality healthcare services and innovative solutions to patients and providers.
+
+                With years of experience in the healthcare industry, we have developed a deep understanding of the
+                challenges and opportunities facing our clients. Our team of healthcare professionals is dedicated
+                to providing personalized care and support to help patients achieve their health goals.
+
+                At our organization, we believe in putting patients first. Our mission is to empower patients with
+                the knowledge and tools they need to take control of their health and wellbeing. We are committed to
+                delivering compassionate, patient-centered care that meets the unique needs of each individual.
+
+                We offer a wide range of healthcare services, including preventative care, diagnostic testing,
+                treatment for acute and chronic conditions, and support for chronic disease management. Our team of
+                experts includes physicians, nurses, and other healthcare professionals who are dedicated to
+                providing the highest level of care.
+
+                Our organization has received numerous awards and recognition for our commitment to quality and
+                innovation in healthcare. We are proud to be a leader in the healthcare industry and to be
+                recognized for our contributions to improving patient outcomes and advancing the field of
+                healthcare.
+
+                Thank you for considering our healthcare management system for your healthcare needs. We look
+                forward to serving you and helping you achieve your health goals.
+            </p>
+        </div>
+    </div>
+    <main>
+        <h2 style="text-align: center;">Our Services</h2>
+        <div class="container">
+            <div class="service">
+                <img src="static/images/service1.jpg" alt="Patient Registration">
+                <h3>Patient Registration</h3>
+                <p>We provide an easy-to-use online registration system for patients, allowing them to securely
+                    enter
+                    their personal and medical information.</p>
+            </div>
+            <div class="service">
+                <img src="static/images/service2.jpg" alt="Electronic Medical Records">
+                <h3>Electronic Medical Records</h3>
+                <p>Our system allows for the secure storage and retrieval of patient medical records, including
+                    diagnoses, treatments, and test results.</p>
+            </div>
+            <div class="service">
+                <img src="static/images/service3.jpg" alt="Doctor Scheduling">
+                <h3>Doctor Scheduling</h3>
+                <p>Our system allows doctors to easily manage their schedules, view patient appointments, and
+                    receive
+                    automatic appointment reminders.</p>
+            </div>
+            <div class="service">
+                <img src="static/images/service4.png" alt="Real-time Monitoring">
+                <h3>Real-time Monitoring</h3>
+                <p>Our system includes real-time monitoring of patient vitals and health status, allowing for early
+                    detection of potential health problems.</p>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2023 Medicare Healthcare System. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
