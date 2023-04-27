@@ -24,10 +24,20 @@ def aboutus():
 def analytics():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
+    
+    cursor.execute("SELECT doctor FROM appointments")
+    rows = cursor.fetchall()
+    professionals = ["Pediatrician", "Cardiologist", "Dentist", "Chiropractor", "Ophthalmologist", "Dermatologist", "Gastroenterologist"]
+    count_by_professional = {professional: 0 for professional in professionals}
+    for row in rows:
+        doctor = row[0]
+        specialty = doctor.split(" - ")[1]
+        if specialty in count_by_professional:
+            count_by_professional[specialty] += 1
+    professionalscounts = [count_by_professional[professional] for professional in professionals]
 
     cursor.execute("SELECT strftime('%m', datetime) as month FROM appointments")
     results = cursor.fetchall()
-    
     month_counts = {}
     for result in results:
         month_num = int(result[0])
@@ -44,11 +54,8 @@ def analytics():
             counts.append(month_counts[label])
         else:
             counts.append(0)
-    
-    print('labels:', labels)
-    print('counts:', counts)
 
-    return render_template("analytics.html", labels=json.dumps(labels), counts=json.dumps(counts))
+    return render_template("analytics.html", labels=json.dumps(labels), counts=json.dumps(counts), professionals=json.dumps(professionals), professionalscounts=json.dumps(professionalscounts))
 
 @app.route("/bookappointment")
 def bookappointment():
