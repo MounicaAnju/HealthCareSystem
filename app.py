@@ -67,7 +67,7 @@ def addrow():
             password=data['password']
             conn = sqlite3.connect('database.db')
             print ("Opened database successfully")
-            conn.execute('drop table users')
+            # conn.execute('drop table users')
             conn.execute('CREATE TABLE IF NOT EXISTS USERS(fname TEXT, lname TEXT, age TEXT, address TEXT, gender TEXT, email TEXT,phonenumber TEXT,password TEXT)')
             print ("Table created successfully")
 
@@ -88,20 +88,46 @@ def addrow():
             con.close()
             return jsonify({'message': msg})
         
-@app.route("/uservalidation", methods=['POST'])
-def uservalidation():
+
+@app.route('/validate', methods=['POST'])
+def validate():
     email = request.json['email']
     password = request.json['password']
+
     conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM users WHERE email=? AND password=?', (email, password))
-    user = cursor.fetchone()
-    if user:
-        # User is found, return JSON response indicating success
-        return jsonify(valid=True)
+    c = conn.cursor()
+
+    c.execute("SELECT * FROM users WHERE email = ?", (email,))
+    result = c.fetchone()
+    # print(result[7])
+
+    conn.close()
+
+    if result:
+        if result[7] == password:
+            name=result[0]
+            print("hiiiiii user")
+            return jsonify({'success': True})
+        else:
+            return jsonify({'success': False, 'message': 'Invalid email or password','name':name})
     else:
-        # User is not found, return JSON response indicating failure
-        return jsonify(valid=False)
+        # User does not exist
+        return jsonify({'success': False})
+
+
+    # print("hiii")
+    # email = request.json['email']
+    # password = request.json['password']
+    # conn = sqlite3.connect('database.db')
+    # cursor = conn.cursor()
+    # cursor.execute('SELECT * FROM users WHERE email=? AND password=?', (email, password))
+    # user = cursor.fetchone()
+    # if user:
+    #     # User is found, return JSON response indicating success
+    #     return jsonify(valid=True)
+    # else:
+    #     # User is not found, return JSON response indicating failure
+    #     return jsonify(valid=False)
 
             
         

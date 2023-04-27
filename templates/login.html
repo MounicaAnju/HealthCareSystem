@@ -69,7 +69,7 @@
             <h1 class="title"> Login
                 <div class="close"></div>
             </h1>
-            <form novalidate>
+            <form action="{{url_for('validate')}}"novalidate>
                 <div class="input-container" id="email-container">
                     <div></div>
                     <input type="email" id="email" required="required" />
@@ -86,6 +86,7 @@
                 <div class="button-container">
                     <button><span>Login &nbsp;&nbsp;<i class="fa fa-chevron-right"></i></span></button>
                 </div>
+                
                 <div class="forgot-password">
                     <a href="forgotpassword.html">Forgot Password?</a>
                 </div>
@@ -149,31 +150,47 @@
         }
 
 
-        function validateUser() {
-            // const formData = JSON.parse(localStorage.getItem('formData'));
-            // const storedEmail = formData.email
-            // const storedPassword = formData.password
-            const email=document.getElementById("email");
-            const password=document.getElementById("password");
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/uservalidation');
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    const response = JSON.parse(xhr.responseText);
-                    if (response.valid) {
-                        // User is valid, submit the form
-                        // document.getElementById('myForm').submit();
-                        return true;
-                    }else {
-                        showError(password, passwordErrorMessage, passwordLabel);
-                        passwordErrorMessage.textContent = 'It seems like you didnt Sign Up. Please Sign Up.';
-                        return false;
-                    }
-                }
-            };
-            xhr.send(JSON.stringify({ email: email.value, password: password.value }));
+        // function validateUser() {
+        //     const formData = JSON.parse(localStorage.getItem('formData'));
+        //     const storedEmail = formData.email
+        //     const storedPassword = formData.password
+        //     if (email.value === storedEmail && password.value === storedPassword) {
+        //         return true;
+        //     } else {
+        //         showError(password, passwordErrorMessage, passwordLabel);
+        //         passwordErrorMessage.textContent = 'It seems like you didnt Sign Up. Please Sign Up.';
+        //         return false;
+        //     }
+        // }
+        async function validateUser() {
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const response = await fetch('/validate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email.value, password: password.value }),
+        });
+        const data = await response.json();
+        console.log(data)
+        if (data.success) {
+            return true;
+        } else if (data.message === 'Invalid email or password') {
+            showError(password, passwordErrorMessage, passwordLabel);
+            passwordErrorMessage.textContent = 'Please check your email or password.';
+            return false; 
+        } else {
+            showError(password, passwordErrorMessage, passwordLabel);
+            passwordErrorMessage.textContent = 'It seems like you do not have an account. Please sign up.';
+            return false; 
         }
+        // } else {
+        //     // showError(password, data.message, 'Password');
+        //     showError(password, passwordErrorMessage, passwordLabel);
+        //         passwordErrorMessage.textContent = 'It seems like you didnt Sign Up. Please Sign Up.';
+        //     return false;
+        // }
+        }
+
 
         email.addEventListener('input', validateEmail);
         password.addEventListener('input', validatePassword);
@@ -195,17 +212,35 @@
         //     showSuccessPopup();
         // }
 
-        function validateForm(event) {
+        // function validateForm(event) {
+        //     event.preventDefault();
+        //     validateEmail();
+        //     validatePassword();
+        //     if (form.checkValidity() && validateUser()) {
+        //         // popup
+        //         //successPopup.style.display = 'block';
+        //         event.preventDefault();
+        //         window.location.href = "{{url_for('analytics')}}";
+        //     }
+        // }
+        async function validateForm(event) {
             event.preventDefault();
             validateEmail();
             validatePassword();
-            if (form.checkValidity() && validateUser()) {
-                // popup
-                //successPopup.style.display = 'block';
-                print("doneeee")
-                window.location.href = 'analytics.html';
+            if (form.checkValidity()) {
+                const isValidUser = await validateUser();
+                if (isValidUser) {
+                window.location.href = "{{url_for('analytics')}}";
+                }
+                // } else {
+                // showError(password, passwordErrorMessage, passwordLabel);
+                // passwordErrorMessage.textContent = 'Invalid email or password.';
+                // }
             }
         }
+
+form.addEventListener('submit', validateForm);
+
 
         form.addEventListener('submit', validateForm);
     </script>

@@ -332,18 +332,18 @@
                 console.log('Password:', passwordValue);
                 console.log('Retype Password:', confirmPasswordValue);
                 console.log('Saving to local storage...');
-                // const formData = {
-                //     firstName: firstNameValue,
-                //     lastName: lastNameValue,
-                //     age: ageValue,
-                //     address: addressValue,
-                //     gender: genderValue,
-                //     email: emailValue,
-                //     phoneNumber: phoneNumberValue,
-                //     password: passwordValue,
-                //     confirmPassword: confirmPasswordValue
-                // };
-                // localStorage.setItem('formData', JSON.stringify(formData));
+                const formData = {
+                    firstName: firstNameValue,
+                    lastName: lastNameValue,
+                    age: ageValue,
+                    address: addressValue,
+                    gender: genderValue,
+                    email: emailValue,
+                    phoneNumber: phoneNumberValue,
+                    password: passwordValue,
+                    confirmPassword: confirmPasswordValue
+                };
+                localStorage.setItem('formData', JSON.stringify(formData));
                 const xhr = new XMLHttpRequest();
                 xhr.open("POST", "/addrow");
                 xhr.setRequestHeader("Content-Type", "application/json");
