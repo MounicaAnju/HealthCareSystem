@@ -88,6 +88,44 @@ def addrow():
             con.close()
             return jsonify({'message': msg})
         
+@app.route("/addappointment", methods=['POST','GET'])
+def addappointment():
+    if request.method == 'POST':
+        try:
+            data = request.get_json()
+            fname = data['firstName']
+            lname = data['lastName']
+            age = data['age']
+            address = data['address']
+            gender = data['gender']
+            email = data['email']
+            phoneNumber = data['phoneNumber']
+            doctor = data['doctor']
+            datetime = data['datetime']
+            msg = data['msg']
+            conn = sqlite3.connect('database.db')
+            print ("Opened database successfully")
+            # conn.execute('drop table users')
+            conn.execute('CREATE TABLE IF NOT EXISTS APPOINTMENTS(fname TEXT, lname TEXT, age TEXT, address TEXT, gender TEXT, email TEXT,phonenumber TEXT,doctor TEXT, datetime timestamp, msg TEXT)')
+            print ("Table created successfully")
+
+            with sqlite3.connect("database.db") as con:
+                cur = con.cursor()
+                cur.execute("INSERT INTO APPOINTMENTS (fname, lname, age, address, gender, email, phonenumber,doctor,datetime,msg ) VALUES(?,?,?,?,?,?,?,?,?,?)",(fname, lname, age, address, gender, email, phoneNumber,doctor, datetime, msg))
+                # cur.execute("INSERT INTO USERS (fname, lname) VALUES(?,?)",(fname, lname ))
+                print("hello db")
+                con.commit()
+                msg = "Record successfully added"
+        except:
+            con.rollback()
+            print("hello error")
+            msg = "error in insert operation"
+        
+        finally:
+            
+            con.close()
+            return jsonify({'message': msg})
+        
 
 @app.route('/validate', methods=['POST'])
 def validate():
