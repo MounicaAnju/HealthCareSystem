@@ -6,19 +6,9 @@
     <link rel="stylesheet" href="static/css/login.css">
     <link rel="stylesheet" href="static/css/nav-bar.css">
     <link rel="stylesheet" href="static/css/footer.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css">
 
     <style>
-        /* .success-popup {
-            position: fixed;
-            top: 10%;
-            right: 10%;
-            background-color: #4CAF50;
-            color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            z-index: 9999;
-            display: none;
-        } */
         footer {
             position: fixed;
         }
@@ -41,6 +31,7 @@
 </head>
 
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
     <header>
         <div class="logo">
             <a href="{{url_for('index')}}"><img src="static/images/logo.png" alt="Medicare Logo"></a>
@@ -50,28 +41,28 @@
         </div>
         <nav>
             <ul>
-                <li><a href="{{url_for('aboutus')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>About Us</a></li>
-                <li><a href="{{ url_for('services')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Services</a>
+                <li><a href="{{url_for('aboutus')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>About
+                        Us</a></li>
+                <li><a href="{{ url_for('services')}}"><span class="home"><i
+                                class="fa fa-fw fa-home"></i></span>Services</a>
                 </li>
-                <!-- <li><a href="{{ url_for('bookappointment')}}"><span><i class="fa fa-search"></i></span>Book Appointment</a>
-                </li>
-                <li><a href="{{ url_for('login') }}"><span><i class="fa fa-file-text"></i></span>Login</a></li>
-                <li><a href="{{ url_for('createaccount')}}"> Sign Up</a></li> -->
-                <li><a href="{{url_for('analytics')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Analytics</a>
+                <li><a href="{{url_for('analytics')}}"><span class="home"><i
+                                class="fa fa-fw fa-home"></i></span>Analytics</a>
                 </li>
                 <li><a href="{{url_for('contactus')}}"><span><i class="fa fa-file-text"></i></span>Contact Us</a></li>
                 {%if 'name' in session%}
-                    <li style="color:white">{{'Welcome, '+session['name']}}</li>
-                    <li><a href="{{ url_for('bookappointment')}}"><span><i class="fa fa-search"></i></span>Book Appointment</a>
-                    </li>
-                    <li><a href="{{ url_for('logout') }}"><span><i class="fa fa-sign-out"></i></span>Logout</a></li>
-                    {% else %}
-                    <li><a href="{{ url_for('login')}}"><span><i class="fa fa-search"></i></span>Book Appointment</a>
-                    </li>
-                    <li><a href="{{ url_for('login') }}"><span><i class="fa fa-file-text"></i></span>Login</a></li>
-                    <li><a href="{{ url_for('createaccount')}}"> Sign Up</a>
-                    </li>
-                    {% endif %}
+                <li style="color:white">{{'Welcome, '+session['name']}}</li>
+                <li><a href="{{ url_for('bookappointment')}}"><span><i class="fa fa-search"></i></span>Book
+                        Appointment</a>
+                </li>
+                <li><a href="{{ url_for('logout') }}"><span><i class="fa fa-sign-out"></i></span>Logout</a></li>
+                {% else %}
+                <li><a href="{{ url_for('login')}}"><span><i class="fa fa-search"></i></span>Book Appointment</a>
+                </li>
+                <li><a href="{{ url_for('login') }}"><span><i class="fa fa-file-text"></i></span>Login</a></li>
+                <li><a href="{{ url_for('createaccount')}}"> Sign Up</a>
+                </li>
+                {% endif %}
             </ul>
         </nav>
     </header>
@@ -81,7 +72,7 @@
             <h1 class="title"> Login
                 <div class="close"></div>
             </h1>
-            <form action="{{url_for('validate')}}"novalidate>
+            <form action="{{url_for('validate')}}" novalidate>
                 <div class="input-container" id="email-container">
                     <div></div>
                     <input type="email" id="email" required="required" />
@@ -132,20 +123,9 @@
             inputElement.parentElement.classList.remove('input-error');
             errorMessage.textContent = '';
         }
-
-        // function validateEmail() {
-        //     if (email.validity.valueMissing) {
-        //         showError(email, emailErrorMessage, emailLabel);
-        //     } else if (email.validity.typeMismatch) {
-        //         showError(email, emailErrorMessage, emailLabel);
-        //         emailErrorMessage.textContent = 'Please enter a valid email address';
-        //     } else {
-        //         hideError(email, emailErrorMessage);
-        //     }
-        // }
         function validateEmail() {
-            
-            pattern=/^((([!#$%&'*+\-/=?^_`{|}~\w])|([!#$%&'*+\-/=?^_`{|}~\w][!#$%&'*+\-/=?^_`{|}~\.\w]{0,}[!#$%&'*+\-/=?^_`{|}~\w]))[@]\w+([-.]\w+)*\.\w+([-.]\w+)*)$/;
+
+            pattern = /^((([!#$%&'*+\-/=?^_`{|}~\w])|([!#$%&'*+\-/=?^_`{|}~\w][!#$%&'*+\-/=?^_`{|}~\.\w]{0,}[!#$%&'*+\-/=?^_`{|}~\w]))[@]\w+([-.]\w+)*\.\w+([-.]\w+)*)$/;
             if (email.validity.valueMissing) {
                 showError(email, emailErrorMessage, emailLabel);
             } else if (!pattern.test(email.value)) {
@@ -155,23 +135,14 @@
                 hideError(email, emailErrorMessage);
             }
         }
-
-        // function validatePassword() {
-        //     if (password.validity.valueMissing) {
-        //         showError(password, passwordErrorMessage, passwordLabel);
-        //     } else {
-        //         hideError(password, passwordErrorMessage);
-        //     }
-        // }
-
         function validatePassword() {
-            patternpassword=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+            patternpassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
             if (password.validity.valueMissing) {
                 showError(password, passwordErrorMessage, passwordLabel);
-            }else if(!patternpassword.test(password.value)){
+            } else if (!patternpassword.test(password.value)) {
 
                 showError(password, passwordErrorMessage, passwordLabel);
-                passwordErrorMessage.textContent='The password you provided is not valid. Please ensure that your password meets the following requirements a) Must contain at least one lowercase and uppercase letter and atleast one digit and Must be at least 8 characters long.'
+                passwordErrorMessage.textContent = 'The password you provided is not valid. Please ensure that your password meets the following requirements a) Must contain at least one lowercase and uppercase letter and atleast one digit and Must be at least 8 characters long.'
             } else {
                 hideError(password, passwordErrorMessage);
             }
@@ -184,20 +155,6 @@
                 validatePassword();
             }
         }
-
-
-        // function validateUser() {
-        //     const formData = JSON.parse(localStorage.getItem('formData'));
-        //     const storedEmail = formData.email
-        //     const storedPassword = formData.password
-        //     if (email.value === storedEmail && password.value === storedPassword) {
-        //         return true;
-        //     } else {
-        //         showError(password, passwordErrorMessage, passwordLabel);
-        //         passwordErrorMessage.textContent = 'It seems like you didnt Sign Up. Please Sign Up.';
-        //         return false;
-        //     }
-        // }
         async function validateUser() {
             const email = document.getElementById('email');
             const password = document.getElementById('password');
@@ -209,56 +166,28 @@
             const data = await response.json();
             console.log(data)
             if (data.success) {
+                Swal.fire({
+                    title: 'Success',
+                    text: 'You have successfully logged in!',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                });
                 return true;
             } else if (data.message === 'Invalid email or password') {
                 showError(password, passwordErrorMessage, passwordLabel);
                 passwordErrorMessage.textContent = 'Please check your email or password.';
-                return false; 
+                return false;
             } else {
                 showError(password, passwordErrorMessage, passwordLabel);
                 passwordErrorMessage.textContent = 'It seems like you do not have an account. Please sign up.';
-                return false; 
+                return false;
+            }
         }
-        // } else {
-        //     // showError(password, data.message, 'Password');
-        //     showError(password, passwordErrorMessage, passwordLabel);
-        //         passwordErrorMessage.textContent = 'It seems like you didnt Sign Up. Please Sign Up.';
-        //     return false;
-        // }
-        }
-
-
         email.addEventListener('input', validateEmail);
         password.addEventListener('input', validatePassword);
 
         email.addEventListener('blur', handleBlur);
         password.addEventListener('blur', handleBlur);
-
-        // // Show the success popup
-        // function showSuccessPopup() {
-        //     var successPopup = document.querySelector('.success-popup');
-        //     successPopup.style.display = 'block';
-        //     setTimeout(function () {
-        //         successPopup.style.display = 'none';
-        //     }, 2000);
-        // }
-
-        // // Call the showSuccessPopup() function when the login is successful
-        // if (loginSuccessful) {
-        //     showSuccessPopup();
-        // }
-
-        // function validateForm(event) {
-        //     event.preventDefault();
-        //     validateEmail();
-        //     validatePassword();
-        //     if (form.checkValidity() && validateUser()) {
-        //         // popup
-        //         //successPopup.style.display = 'block';
-        //         event.preventDefault();
-        //         window.location.href = "{{url_for('analytics')}}";
-        //     }
-        // }
         async function validateForm(event) {
             event.preventDefault();
             validateEmail();
@@ -266,12 +195,8 @@
             if (form.checkValidity()) {
                 const isValidUser = await validateUser();
                 if (isValidUser) {
-                window.location.href = "{{url_for('aboutus')}}";
+                    window.location.href = "{{url_for('aboutus')}}";
                 }
-                // } else {
-                // showError(password, passwordErrorMessage, passwordLabel);
-                // passwordErrorMessage.textContent = 'Invalid email or password.';
-                // }
             }
         }
 
