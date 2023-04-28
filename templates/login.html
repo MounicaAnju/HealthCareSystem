@@ -168,6 +168,7 @@
             patternpassword=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
             if (password.validity.valueMissing) {
                 showError(password, passwordErrorMessage, passwordLabel);
+                
             }else if(!patternpassword.test(password.value)){
 
                 showError(password, passwordErrorMessage, passwordLabel);
@@ -213,10 +214,12 @@
             } else if (data.message === 'Invalid email or password') {
                 showError(password, passwordErrorMessage, passwordLabel);
                 passwordErrorMessage.textContent = 'Please check your email or password.';
+                showError(email,emailErrorMessage,emailLabel);
                 return false; 
             } else {
                 showError(password, passwordErrorMessage, passwordLabel);
                 passwordErrorMessage.textContent = 'It seems like you do not have an account. Please sign up.';
+                showError(email,emailErrorMessage,emailLabel);
                 return false; 
         }
         // } else {

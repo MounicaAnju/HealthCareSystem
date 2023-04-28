@@ -24,7 +24,6 @@ def aboutus():
 def analytics():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
-    
     cursor.execute("SELECT doctor FROM appointments")
     rows = cursor.fetchall()
     professionals = ["Pediatrician", "Cardiologist", "Dentist", "Chiropractor", "Ophthalmologist", "Dermatologist", "Gastroenterologist"]
