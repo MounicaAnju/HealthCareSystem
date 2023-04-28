@@ -41,6 +41,8 @@
                     </li>
                     <li><a href="{{ url_for('logout') }}"><span><i class="fa fa-sign-out"></i></span>Logout</a></li>
                     {% else %}
+                    <li><a href="{{ url_for('login')}}"><span><i class="fa fa-search"></i></span>Book Appointment</a>
+                    </li>
                     <li><a href="{{ url_for('login') }}"><span><i class="fa fa-file-text"></i></span>Login</a></li>
                     <li><a href="{{ url_for('createaccount')}}"> Sign Up</a>
                     </li>
