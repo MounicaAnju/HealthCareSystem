@@ -391,6 +391,7 @@
                             }).then((result) => {
                                 if (result.isConfirmed) {
                                     resetForm();
+                                    window.location.href = "{{url_for('login')}}";
                                 }
                             });
                         }
