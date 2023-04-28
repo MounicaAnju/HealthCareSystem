@@ -37,7 +37,7 @@
                 <li><a href="{{ url_for('services')}}"><span><i class="fas fa-hand-holding-medical"></i></span> Services</a>
                 </li>
                 {%if 'name' in session%}
-                <li><a href="{{ url_for('login')}}"><span><i class="fas fa-calendar-check"></i></span> Book Appointment</a>
+                <li><a href="{{ url_for('bookappointment')}}"><span><i class="fas fa-calendar-check"></i></span> Book Appointment</a>
                 </li>
                 {% endif %}
                 <li><a href="{{url_for('analytics')}}"><span><i class="fas fa-chart-line"></i></span> Analytics</a>
@@ -50,7 +50,7 @@
                 {%if 'name' in session%}
                 <li class="user-info">
                     <span style="margin-right: 5px !important;
-                    color: white !important;">Welcome, {{ session['name'] }}</span>
+                    color: white !important; font-weight:  bold !important;">Welcome, {{ session['name'] }}</span>
                     <a href="{{ url_for('logout') }}" class="logout-btn">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>

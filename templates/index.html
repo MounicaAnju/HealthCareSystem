@@ -32,7 +32,7 @@
                 <li><a href="{{ url_for('services')}}"><span><i class="fas fa-hand-holding-medical"></i></span> Services</a>
                 </li>
                 {%if 'name' in session%}
-                <li><a href="{{ url_for('login')}}"><span><i class="fas fa-calendar-check"></i></span> Book Appointment</a>
+                <li><a href="{{ url_for('bookappointment')}}"><span><i class="fas fa-calendar-check"></i></span> Book Appointment</a>
                 </li>
                 {% endif %}
                 <li><a href="{{url_for('analytics')}}"><span><i class="fas fa-chart-line"></i></span> Analytics</a>
