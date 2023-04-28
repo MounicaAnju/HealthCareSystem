@@ -2,8 +2,10 @@ from flask import Flask
 from flask import render_template,session,redirect,url_for
 from flask import request
 from flask import jsonify
-
+from datetime import datetime
+import json
 import sqlite3
+
 app = Flask(__name__)
 app.secret_key='mykey'
 @app.route("/")
@@ -20,7 +22,40 @@ def aboutus():
 
 @app.route("/analytics")
 def analytics():
-    return render_template("analytics.html")
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT doctor FROM appointments")
+    rows = cursor.fetchall()
+    professionals = ["Pediatrician", "Cardiologist", "Dentist", "Chiropractor", "Ophthalmologist", "Dermatologist", "Gastroenterologist"]
+    count_by_professional = {professional: 0 for professional in professionals}
+    for row in rows:
+        doctor = row[0]
+        specialty = doctor.split(" - ")[1]
+        if specialty in count_by_professional:
+            count_by_professional[specialty] += 1
+    professionalscounts = [count_by_professional[professional] for professional in professionals]
+
+    cursor.execute("SELECT strftime('%m', datetime) as month FROM appointments")
+    results = cursor.fetchall()
+    month_counts = {}
+    for result in results:
+        month_num = int(result[0])
+        month_name = datetime(2000, month_num, 1).strftime('%b')
+        if month_name in month_counts:
+            month_counts[month_name] += 1
+        else:
+            month_counts[month_name] = 1
+            
+    labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    counts = []
+    for label in labels:
+        if label in month_counts:
+            counts.append(month_counts[label])
+        else:
+            counts.append(0)
+
+    return render_template("analytics.html", labels=json.dumps(labels), counts=json.dumps(counts), professionals=json.dumps(professionals), professionalscounts=json.dumps(professionalscounts))
 
 @app.route("/bookappointment")
 def bookappointment():
@@ -68,7 +103,6 @@ def addrow():
             password=data['password']
             conn = sqlite3.connect('database.db')
             print ("Opened database successfully")
-            # conn.execute('drop table users')
             conn.execute('CREATE TABLE IF NOT EXISTS USERS(fname TEXT, lname TEXT, age TEXT, address TEXT, gender TEXT, email TEXT,phonenumber TEXT,password TEXT)')
             print ("Table created successfully")
 
@@ -92,8 +126,89 @@ def addrow():
         finally:
             
             con.close()
-            return jsonify({'message': msg})
+            return jsonify({'message': msg})        
         
+@app.route("/addappointment", methods=['POST','GET'])
+def addappointment():
+    if request.method == 'POST':
+        try:
+            data = request.get_json()
+            fname = data['firstName']
+            lname = data['lastName']
+            age = data['age']
+            address = data['address']
+            gender = data['gender']
+            email = data['email']
+            phoneNumber = data['phoneNumber']
+            doctor = data['doctor']
+            datetime = data['datetime']
+            msg = data['msg']
+            conn = sqlite3.connect('database.db')
+            print ("Opened database successfully")
+            # conn.execute('drop table users')
+            conn.execute('CREATE TABLE IF NOT EXISTS APPOINTMENTS(fname TEXT, lname TEXT, age TEXT, address TEXT, gender TEXT, email TEXT,phonenumber TEXT,doctor TEXT, datetime timestamp, msg TEXT)')
+            print ("Table created successfully")
+
+            with sqlite3.connect("database.db") as con:
+                cur = con.cursor()
+                cur.execute("INSERT INTO APPOINTMENTS (fname, lname, age, address, gender, email, phonenumber,doctor,datetime,msg ) VALUES(?,?,?,?,?,?,?,?,?,?)",(fname, lname, age, address, gender, email, phoneNumber,doctor, datetime, msg))
+                # cur.execute("INSERT INTO USERS (fname, lname) VALUES(?,?)",(fname, lname ))
+                print("hello db")
+                con.commit()
+                msg = "Record successfully added"
+        except:
+            con.rollback()
+            print("hello error")
+            msg = "error in insert operation"
+        
+        finally:
+            
+            con.close()
+            return jsonify({'message': msg})
+
+        
+@app.route("/uservalidation", methods=['POST'])
+def uservalidation():
+    email = request.json['email']
+    password = request.json['password']
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM users WHERE email=? AND password=?', (email, password))
+    user = cursor.fetchone()
+    if user:
+        # User is found, return JSON response indicating success
+        return jsonify(valid=True)
+    else:
+        # User is not found, return JSON response indicating failure
+        return jsonify(valid=False)
+
+            
+@app.route("/contactusform", methods=['POST'])
+def contactusform():
+    if request.method == 'POST':
+        form = request.json
+        name = form['name']
+        email = form['email']
+        message = form['message']
+        try:
+            conn = sqlite3.connect('database.db')
+            print("Opened database successfully")
+            conn.execute('drop table if exists contactus')
+            conn.execute('CREATE TABLE IF NOT EXISTS CONTACTUS(name TEXT, email TEXT,message TEXT)')
+            with sqlite3.connect("database.db") as con:
+                cur = con.cursor()
+                cur.execute("INSERT INTO CONTACTUS (name, email, message) VALUES (?, ?, ?)", (name, email, message))
+                con.commit()
+                msg = "Record added successfully"
+        except:
+            con.rollback()
+            msg = "Data Insertion Failed"
+
+        finally:
+            con.close()
+            return jsonify({'message': msg})
+
+
 
 @app.route('/validate', methods=['POST'])
 def validate():
@@ -143,9 +258,3 @@ def logout():
     # else:
     #     # User is not found, return JSON response indicating failure
     #     return jsonify(valid=False)
-
-            
-        
-
-
-
