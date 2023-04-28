@@ -184,9 +184,11 @@
                 }
             } else if (data.message === 'Invalid email or password') {
                 showError(password, passwordErrorMessage, passwordLabel);
+                showError(email,emailErrorMessage,emailLabel);
                 passwordErrorMessage.textContent = 'Please check your email or password.';
             } else {
                 showError(password, passwordErrorMessage, passwordLabel);
+                showError(email,emailErrorMessage,emailLabel);
                 passwordErrorMessage.textContent = 'It seems like you do not have an account. Please sign up.';
             }
             return false;
