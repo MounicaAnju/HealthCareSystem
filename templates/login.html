@@ -139,7 +139,7 @@
             patternpassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
             if (password.validity.valueMissing) {
                 showError(password, passwordErrorMessage, passwordLabel);
-            } else if (!patternpassword.test(password.value)) {
+            }else if(!patternpassword.test(password.value)){
 
                 showError(password, passwordErrorMessage, passwordLabel);
                 passwordErrorMessage.textContent = 'The password you provided is not valid. Please ensure that your password meets the following requirements a) Must contain at least one lowercase and uppercase letter and atleast one digit and Must be at least 8 characters long.'
@@ -176,12 +176,18 @@
             } else if (data.message === 'Invalid email or password') {
                 showError(password, passwordErrorMessage, passwordLabel);
                 passwordErrorMessage.textContent = 'Please check your email or password.';
-                return false;
+                return false; 
             } else {
                 showError(password, passwordErrorMessage, passwordLabel);
                 passwordErrorMessage.textContent = 'It seems like you do not have an account. Please sign up.';
-                return false;
-            }
+                return false; 
+        }
+        // } else {
+        //     // showError(password, data.message, 'Password');
+        //     showError(password, passwordErrorMessage, passwordLabel);
+        //         passwordErrorMessage.textContent = 'It seems like you didnt Sign Up. Please Sign Up.';
+        //     return false;
+        // }
         }
         email.addEventListener('input', validateEmail);
         password.addEventListener('input', validatePassword);
