@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="static/css/contact-us.css">
   <link rel="stylesheet" href="static/css/footer.css">
   <link rel="stylesheet" href="static/css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css">
+
 </head>
 
 <style>
@@ -20,6 +22,9 @@
 </style>
 
 <body>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
+  <script>
+  </script>
   <div class="back-ground-img">
     <header>
       <div class="logo">
@@ -223,30 +228,28 @@
               email: emailValue,
               message: messageValue
             };
-            //   localStorage.setItem('formData', JSON.stringify(formData));
-            //   alert("Thank You For Contacting Us.")
-
-            //   resetForm();
-            //   // document.querySelector("form").submit();
-            // } else {
-            //   console.log('Form is not valid');
-            // }
-
             const xhr = new XMLHttpRequest();
             xhr.open("POST", "/contactusform");
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onload = function () {
               if (xhr.status === 200) {
                 console.log(xhr.responseText);
-                alert("Thank You For Contacting Us.");
-                resetForm();
+                Swal.fire({
+                  title: 'Thank You For Contacting Us!',
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    resetForm();
+                  }
+                });
               } else {
                 console.log("Error: " + xhr.status);
               }
             };
             xhr.send(JSON.stringify(formData));
-          }
 
+          }
         }
         function resetForm() {
           isValid = 0;
