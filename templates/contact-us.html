@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="static/css/contact-us.css">
   <link rel="stylesheet" href="static/css/footer.css">
   <link rel="stylesheet" href="static/css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css">
+
 </head>
 
 <style>
@@ -20,6 +22,9 @@
 </style>
 
 <body>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
+  <script>
+  </script>
   <div class="back-ground-img">
     <header>
       <div class="logo">
@@ -30,7 +35,8 @@
       </div>
       <nav>
         <ul>
-          <li><a href="{{url_for('aboutus')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>About Us</a></li>
+          <li><a href="{{url_for('aboutus')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>About Us</a>
+          </li>
           <li><a href="{{ url_for('services')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Services</a>
           </li>
           <li><a href="{{ url_for('bookappointment')}}"><span><i class="fa fa-search"></i></span>Book Appointment</a>
@@ -67,7 +73,7 @@
           </div>
           <div class="right-side">
             <div class="topic-text">Send us a message</div>
-            <form novalidate>
+            <form action="{{url_for('contactusform')}}" method="POST" novalidate>
               <div class="input-box" id="name-container">
                 <input type="text" id="name" placeholder="Enter your name" minlength="1" maxlength="50" required>
 
@@ -222,13 +228,27 @@
               email: emailValue,
               message: messageValue
             };
-            localStorage.setItem('formData', JSON.stringify(formData));
-            alert("Thank You For Contacting Us.")
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "/contactusform");
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onload = function () {
+              if (xhr.status === 200) {
+                console.log(xhr.responseText);
+                Swal.fire({
+                  title: 'Thank You For Contacting Us!',
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    resetForm();
+                  }
+                });
+              } else {
+                console.log("Error: " + xhr.status);
+              }
+            };
+            xhr.send(JSON.stringify(formData));
 
-            resetForm();
-            // document.querySelector("form").submit();
-          } else {
-            console.log('Form is not valid');
           }
         }
         function resetForm() {
