@@ -30,19 +30,23 @@
             <ul>
                 <li><a href="{{url_for('aboutus')}}"><span><i class="fa fa-fw fa-home"></i></span> About
                         Us</a></li>
-                <li><a href="{{ url_for('services')}}"><span><i class="fas fa-hand-holding-medical"></i></span> Services</a>
+                <li><a href="{{ url_for('services')}}"><span><i class="fas fa-hand-holding-medical"></i></span>
+                        Services</a>
                 </li>
                 {%if 'name' in session%}
-                <li><a href="{{ url_for('bookappointment')}}"><span><i class="fas fa-calendar-check"></i></span> Book Appointment</a>
+                <li><a href="{{ url_for('bookappointment')}}"><span><i class="fas fa-calendar-check"></i></span> Book
+                        Appointment</a>
                 </li>
                 {% endif %}
                 <li><a href="{{url_for('analytics')}}"><span><i class="fas fa-chart-line"></i></span> Analytics</a>
                 </li>
                 {%if 'name' not in session%}
                 <li><a href="{{ url_for('login') }}"><span><i class="fas fa-sign-in-alt"></i></span> Login</a></li>
-                <li><a href="{{ url_for('createaccount')}}"><span><i class="fas fa-sign-in-alt"></i></span> Sign Up</a></li>
+                <li><a href="{{ url_for('createaccount')}}"><span><i class="fas fa-sign-in-alt"></i></span> Sign Up</a>
+                </li>
                 {% endif %}
-                <li><a href="{{url_for('contactus')}}"><span><i class="far fa-paper-plane"></i></span> Contact Us</a></li>
+                <li><a href="{{url_for('contactus')}}"><span><i class="far fa-paper-plane"></i></span> Contact Us</a>
+                </li>
                 {%if 'name' in session%}
                 <li class="user-info">
                     <span class="username">Welcome, {{ session['name'] }}</span>
@@ -364,26 +368,40 @@
                 xhr.open("POST", "/addrow");
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.onload = function () {
-                const response = JSON.parse(xhr.responseText);
-                if (xhr.status === 200) {
-                    console.log(xhr.responseText);
-                        Swal.fire({
-                            title: 'Success',
-                            text: response.message,
-                            icon: 'success',
-                            confirmButtonText: 'OK'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                resetForm();
-                            }
-                        });
-                } else {
-                    console.log("Error:"+xhr.status);
-                }};
-                xhr.send(JSON.stringify({ firstName: firstNameValue, lastName: lastNameValue, age: ageValue, address:addressValue, gender:genderValue, email:emailValue, phoneno:phoneNumberValue, password:passwordValue }));
-            
-            
-                
+                    const response = JSON.parse(xhr.responseText);
+                    if (xhr.status === 200) {
+                        if (response.message === "User with this email already exists") {
+                            Swal.fire({
+                                title: 'error',
+                                text: response.message,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    resetForm();
+                                }
+                            });
+                        } else {
+                            console.log(xhr.responseText);
+                            Swal.fire({
+                                title: 'Success',
+                                text: response.message,
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    resetForm();
+                                }
+                            });
+                        }
+                    } else {
+                        console.log("Error:" + xhr.status);
+                    }
+                };
+                xhr.send(JSON.stringify({ firstName: firstNameValue, lastName: lastNameValue, age: ageValue, address: addressValue, gender: genderValue, email: emailValue, phoneno: phoneNumberValue, password: passwordValue }));
+
+
+
                 // alert("Account Created Successfully")
 
                 // resetForm();
