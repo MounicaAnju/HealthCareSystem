@@ -40,7 +40,8 @@ body {
     height: auto;
 }
 
-.about-section p {
+.about-section p,
+marquee {
     flex: 1;
     margin: 20px;
     font-size: 18px;
@@ -53,4 +54,135 @@ body {
     font-size: 24px;
     text-align: center;
     flex-basis: 100%;
+}
+
+nav {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 60px;
+    padding: 0 20px;
+}
+
+nav ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 30px;
+    font-weight: bold;
+}
+
+.username {
+    margin-right: 5px;
+    color: white;
+}
+
+.logout-btn {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.logout-btn:hover {
+    color: #2c3e50;
+}
+
+/* Extra Small Devices (Phones) */
+@media only screen and (max-width: 767px) {
+    nav {
+        flex-direction: column;
+        height: auto;
+    }
+
+    nav li {
+        margin: 10px 0;
+    }
+
+    .user-info {
+        margin: 10px 0;
+        justify-content: space-between;
+    }
+
+    .username {
+        margin-right: 5px;
+    }
+}
+
+/* Small Devices (Tablets) */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+    nav {
+        flex-direction: column;
+        height: auto;
+    }
+
+    nav li {
+        margin: 12px;
+    }
+
+    .user-info {
+        justify-content: space-between;
+    }
+
+    .username {
+        margin-right: 5px;
+    }
+}
+
+/* Medium Devices (Desktops, Laptops) */
+@media only screen and (min-width: 1024px) and (max-width: 1279px) {
+    nav {
+        flex-direction: column;
+        height: auto;
+    }
+
+    nav li {
+        margin: 5px;
+    }
+
+    .user-info {
+        justify-content: space-between;
+    }
+
+    .username {
+        margin-right: 5px;
+    }
+}
+
+/* Large Devices (Desktops, Laptops) */
+@media only screen and (min-width: 1280px) and (max-width: 1439px) {
+    nav {
+        height: 80px;
+    }
+
+    .user-info {
+        justify-content: space-between;
+    }
+}
+
+/* Extra Large Devices (Large Desktops) */
+@media only screen and (min-width: 1440px) {
+    nav {
+        height: 80px;
+    }
+
+    .user-info {
+        justify-content: space-between;
+    }
 }

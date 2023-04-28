@@ -8,9 +8,14 @@
     <link rel="stylesheet" href="static/css/footer.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.5/jquery.inputmask.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <style>
         .input-container.error .bar {
             background-color: red;
+        }
+        .username {
+            margin-right: 5px !important;
+            color: white !important;
         }
     </style>
 </head>
@@ -25,28 +30,30 @@
         </div>
         <nav>
             <ul>
-                <li><a href="{{url_for('aboutus')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>About Us</a></li>
-                <li><a href="{{ url_for('services')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Services</a>
+                <li><a href="{{url_for('aboutus')}}"><span><i class="fa fa-fw fa-home"></i></span> About
+                        Us</a></li>
+                <li><a href="{{ url_for('services')}}"><span><i class="fas fa-hand-holding-medical"></i></span> Services</a>
                 </li>
-                <!-- <li><a href="{{ url_for('bookappointment')}}"><span><i class="fa fa-search"></i></span>Book Appointment</a>
-                </li> -->
-                <!-- <li><a href="{{ url_for('login') }}"><span><i class="fa fa-file-text"></i></span>Login</a></li>
-                <li><a href="{{ url_for('createaccount')}}"> Sign Up</a></li> -->
-                <li><a href="{{url_for('analytics')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Analytics</a>
-                </li>
-                <li><a href="{{url_for('contactus')}}"><span><i class="fa fa-file-text"></i></span>Contact Us</a></li>
                 {%if 'name' in session%}
-                    <li style="color:white">{{'Welcome, '+session['name']}}</li>
-                    <li><a href="{{ url_for('bookappointment')}}"><span><i class="fa fa-search"></i></span>Book Appointment</a>
-                    </li>
-                    <li><a href="{{ url_for('logout') }}"><span><i class="fa fa-sign-out"></i></span>Logout</a></li>
-                    {% else %}
-                    <li><a href="{{ url_for('login')}}"><span><i class="fa fa-search"></i></span>Book Appointment</a>
-                    </li>
-                    <li><a href="{{ url_for('login') }}"><span><i class="fa fa-file-text"></i></span>Login</a></li>
-                    <li><a href="{{ url_for('createaccount')}}"> Sign Up</a>
-                    </li>
-                    {% endif %}
+                <li><a href="{{ url_for('login')}}"><span><i class="fas fa-calendar-check"></i></span> Book Appointment</a>
+                </li>
+                {% endif %}
+                <li><a href="{{url_for('analytics')}}"><span><i class="fas fa-chart-line"></i></span> Analytics</a>
+                </li>
+                {%if 'name' not in session%}
+                <li><a href="{{ url_for('login') }}"><span><i class="fas fa-sign-in-alt"></i></span> Login</a></li>
+                <li><a href="{{ url_for('createaccount')}}"><span><i class="fas fa-sign-in-alt"></i></span> Sign Up</a></li>
+                {% endif %}
+                <li><a href="{{url_for('contactus')}}"><span><i class="far fa-paper-plane"></i></span> Contact Us</a></li>
+                {%if 'name' in session%}
+                <li class="user-info">
+                    <span style="margin-right: 5px !important;
+                    color: white !important;">Welcome, {{ session['name'] }}</span>
+                    <a href="{{ url_for('logout') }}" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                </li>
+                {% endif %}
             </ul>
         </nav>
     </header>
