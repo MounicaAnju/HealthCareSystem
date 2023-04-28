@@ -35,6 +35,7 @@
                 <li><a href="{{url_for('analytics')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Analytics</a>
                 </li>
                 <li><a href="{{url_for('contactus')}}"><span><i class="fa fa-file-text"></i></span>Contact Us</a></li>
+                
             </ul>
         </nav>
     </header>
@@ -73,8 +74,8 @@
                     <label for="gender" class="dropdown-label"></label>
                     <select id="gender" class="dropdown-select">
                         <option value="">Select Gender</option>
-                        <option value="link1">Male</option>
-                        <option value="link2">Female</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
                     </select>
                     <div class="bar"></div>
                 </div>
@@ -349,12 +350,19 @@
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.onload = function () {
                 if (xhr.status === 200) {
-                    console.log(xhr.responseText);
-                    alert("Account Created Successfully");
-                    resetForm();
+                    const response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                    if (response.success) {
+                        resetForm();
+                        alert(response.message);
+                        window.location.href="{{url_for('login')}}"
                 } else {
-                    console.log("Error: " + xhr.status);
+                    resetForm();
+                    alert(response.message);
                 }
+            } else{
+                console.log("Error:"+xhr.status)
+            }
                 };
                 xhr.send(JSON.stringify({ firstName: firstNameValue, lastName: lastNameValue, age: ageValue, address:addressValue, gender:genderValue, email:emailValue, phoneno:phoneNumberValue, password:passwordValue }));
             
@@ -371,7 +379,6 @@
 
         function resetForm() {
             isValid = 0;
-            // Validate the form values
             const formAttributes = ["first-name", "last-name", "age", "address", "gender", "email", "phone-number", "password", "retype-password"];
             for (let i = 0; i < formAttributes.length; i++) {
                 document.getElementById(formAttributes[i]).value = "";

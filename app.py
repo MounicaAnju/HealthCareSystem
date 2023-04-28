@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template
+from flask import render_template,session,redirect,url_for
 from flask import request
 from flask import jsonify
 from datetime import datetime
@@ -7,7 +7,7 @@ import json
 import sqlite3
 
 app = Flask(__name__)
-
+app.secret_key='mykey'
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -108,11 +108,16 @@ def addrow():
 
             with sqlite3.connect("database.db") as con:
                 cur = con.cursor()
-                cur.execute("INSERT INTO USERS (fname, lname, age, address, gender, email,phonenumber,password) VALUES(?,?,?,?,?,?,?,?)",(fname, lname, age, address, gender, email,phonenumber,password))
-                # cur.execute("INSERT INTO USERS (fname, lname) VALUES(?,?)",(fname, lname ))
-                print("hello db")
-                con.commit()
-                msg = "Record successfully added"
+                cur.execute("SELECT email FROM USERS WHERE email=?", (email,))
+                result = cur.fetchone()
+                if result is not None:
+                    msg = "User with this email already exists"
+                else:
+                    cur.execute("INSERT INTO USERS (fname, lname, age, address, gender, email,phonenumber,password) VALUES(?,?,?,?,?,?,?,?)",(fname, lname, age, address, gender, email,phonenumber,password))
+                    # cur.execute("INSERT INTO USERS (fname, lname) VALUES(?,?)",(fname, lname ))
+                    print("hello db")
+                    con.commit()
+                    msg = "Account Created Successfully"
         except:
             con.rollback()
             print("hello error")
@@ -121,8 +126,7 @@ def addrow():
         finally:
             
             con.close()
-            return jsonify({'message': msg})
-
+            return jsonify({'message': msg})        
         
 @app.route("/addappointment", methods=['POST','GET'])
 def addappointment():
@@ -206,10 +210,6 @@ def contactusform():
 
 
 
-
-
-
-
 @app.route('/validate', methods=['POST'])
 def validate():
     email = request.json['email']
@@ -226,14 +226,23 @@ def validate():
 
     if result:
         if result[7] == password:
-            # name=result[0]
+            name=result[0]
             print("hiiiiii user")
+            session['name']=name
             return jsonify({'success': True})
         else:
             return jsonify({'success': False, 'message': 'Invalid email or password'})
     else:
         # User does not exist
         return jsonify({'success': False})
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
+
+
+
 
 
     # print("hiii")

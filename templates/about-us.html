@@ -26,11 +26,19 @@
                     </li>
                     <li><a href="{{ url_for('bookappointment')}}"><span><i class="fa fa-search"></i></span>Book Appointment</a>
                     </li>
-                    <li><a href="{{ url_for('login') }}"><span><i class="fa fa-file-text"></i></span>Login</a></li>
-                    <li><a href="{{ url_for('createaccount')}}"> Sign Up</a></li>
                     <li><a href="{{url_for('analytics')}}"><span class="home"><i class="fa fa-fw fa-home"></i></span>Analytics</a>
                     </li>
                     <li><a href="{{url_for('contactus')}}"><span><i class="fa fa-file-text"></i></span>Contact Us</a></li>
+                    {%if 'name' in session%}
+                    <li style="color:white">{{'Welcome, '+session['name']}}</li>
+                    <li><a href="{{ url_for('logout') }}"><span><i class="fa fa-sign-out"></i></span>Logout</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('login') }}"><span><i class="fa fa-file-text"></i></span>Login</a></li>
+                    <li><a href="{{ url_for('createaccount')}}"> Sign Up</a>
+                    </li>
+                    {% endif %}
+                    
+                    
                 </ul>
             </nav>
         </header>
