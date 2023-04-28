@@ -44,19 +44,23 @@
             <ul>
                 <li><a href="{{url_for('aboutus')}}"><span><i class="fa fa-fw fa-home"></i></span> About
                         Us</a></li>
-                <li><a href="{{ url_for('services')}}"><span><i class="fas fa-hand-holding-medical"></i></span> Services</a>
+                <li><a href="{{ url_for('services')}}"><span><i class="fas fa-hand-holding-medical"></i></span>
+                        Services</a>
                 </li>
                 {%if 'name' in session%}
-                <li><a href="{{ url_for('bookappointment')}}"><span><i class="fas fa-calendar-check"></i></span> Book Appointment</a>
+                <li><a href="{{ url_for('bookappointment')}}"><span><i class="fas fa-calendar-check"></i></span> Book
+                        Appointment</a>
                 </li>
                 {% endif %}
                 <li><a href="{{url_for('analytics')}}"><span><i class="fas fa-chart-line"></i></span> Analytics</a>
                 </li>
                 {%if 'name' not in session%}
                 <li><a href="{{ url_for('login') }}"><span><i class="fas fa-sign-in-alt"></i></span> Login</a></li>
-                <li><a href="{{ url_for('createaccount')}}"><span><i class="fas fa-sign-in-alt"></i></span> Sign Up</a></li>
+                <li><a href="{{ url_for('createaccount')}}"><span><i class="fas fa-sign-in-alt"></i></span> Sign Up</a>
+                </li>
                 {% endif %}
-                <li><a href="{{url_for('contactus')}}"><span><i class="far fa-paper-plane"></i></span> Contact Us</a></li>
+                <li><a href="{{url_for('contactus')}}"><span><i class="far fa-paper-plane"></i></span> Contact Us</a>
+                </li>
                 {%if 'name' in session%}
                 <li class="user-info">
                     <span style="margin-right: 5px !important;
@@ -142,7 +146,7 @@
             patternpassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
             if (password.validity.valueMissing) {
                 showError(password, passwordErrorMessage, passwordLabel);
-            }else if(!patternpassword.test(password.value)){
+            } else if (!patternpassword.test(password.value)) {
 
                 showError(password, passwordErrorMessage, passwordLabel);
                 passwordErrorMessage.textContent = 'The password you provided is not valid. Please ensure that your password meets the following requirements a) Must contain at least one lowercase and uppercase letter and atleast one digit and Must be at least 8 characters long.'
@@ -158,6 +162,7 @@
                 validatePassword();
             }
         }
+
         async function validateUser() {
             const email = document.getElementById('email');
             const password = document.getElementById('password');
@@ -167,43 +172,39 @@
                 body: JSON.stringify({ email: email.value, password: password.value }),
             });
             const data = await response.json();
-            console.log(data)
             if (data.success) {
-                Swal.fire({
+                const result = await Swal.fire({
                     title: 'Success',
                     text: 'You have successfully logged in!',
                     icon: 'success',
                     confirmButtonText: 'OK',
                 });
-                return true;
+                if (result.isConfirmed) {
+                    return true;
+                }
             } else if (data.message === 'Invalid email or password') {
                 showError(password, passwordErrorMessage, passwordLabel);
                 passwordErrorMessage.textContent = 'Please check your email or password.';
-                return false; 
             } else {
                 showError(password, passwordErrorMessage, passwordLabel);
                 passwordErrorMessage.textContent = 'It seems like you do not have an account. Please sign up.';
-                return false; 
-        }
-        // } else {
-        //     // showError(password, data.message, 'Password');
-        //     showError(password, passwordErrorMessage, passwordLabel);
-        //         passwordErrorMessage.textContent = 'It seems like you didnt Sign Up. Please Sign Up.';
-        //     return false;
-        // }
+            }
+            return false;
         }
         email.addEventListener('input', validateEmail);
         password.addEventListener('input', validatePassword);
 
         email.addEventListener('blur', handleBlur);
         password.addEventListener('blur', handleBlur);
+
         async function validateForm(event) {
             event.preventDefault();
-            validateEmail();
-            validatePassword();
+            const form = event.target; // assuming the event target is the form
+            await validateEmail();
+            await validatePassword();
             if (form.checkValidity()) {
-                const isValidUser = await validateUser();
-                if (isValidUser) {
+                const validatedUser = await validateUser();
+                if (validatedUser) {
                     window.location.href = "{{url_for('aboutus')}}";
                 }
             }
